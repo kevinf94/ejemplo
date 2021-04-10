@@ -8,7 +8,8 @@ Class {
 		'group',
 		'var',
 		'var44',
-		'var45'
+		'var45',
+		'qwerty'
 	],
 	#category : #'Study group-ui'
 }
