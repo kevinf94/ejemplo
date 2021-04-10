@@ -3,7 +3,7 @@
 "
 Class {
 	#name : #CuOOraEditorPreguntaComponent,
-	#superclass : #CuOOraEditLayoutComponent,
+	#superclass : #WAComponent,
 	#instVars : [
 		'pregunta',
 		'nuevoTitulo',

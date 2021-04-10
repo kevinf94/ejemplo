@@ -41,7 +41,7 @@ CuOOraHomeComponent >> renderPreguntasRelevantesOn: aCanvas [
 				self renderPregunta: unaPregunta topicosOn: aCanvas.
 				self renderPregunta: unaPregunta infoOn: aCanvas.
 				self renderPost: unaPregunta votosOn: aCanvas.
-				self renderBorrarPost: unaPregunta on: aCanvas.
+				"self renderBorrarPost: unaPregunta on: aCanvas."
 				(relevantes last = unaPregunta) ifFalse: [ aCanvas horizontalRule. ].
 			].
 		].

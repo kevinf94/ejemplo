@@ -65,11 +65,6 @@ CuOOrLayoutComponent >> renderEncabezadoOn: aCanvas [
 ]
 
 { #category : #rendering }
-CuOOrLayoutComponent >> renderIrAlPerfilDelUsuario: unUsuario [
-	
-]
-
-{ #category : #rendering }
 CuOOrLayoutComponent >> renderLinkAlPerfilDelUsuario: unUsuario On: aCanvas [
 	|elUsuario|
 	elUsuario := unUsuario.
@@ -94,6 +89,17 @@ CuOOrLayoutComponent >> renderPregunta: unaPregunta infoOn: aCanvas [
 	aCanvas paragraph: [
 		aCanvas
 			text: 'Realizada por '; strong: [ self renderLinkAlPerfilDelUsuario: (unaPregunta usuario) On: aCanvas. ];
+			text: '. | ';
+			text: unaPregunta cantidadDeRespuestas; text: ' respuestas.'.
+	].
+
+]
+
+{ #category : #rendering }
+CuOOrLayoutComponent >> renderPregunta: unaPregunta noLinkInfoOn: aCanvas [
+	aCanvas paragraph: [
+		aCanvas
+			text: 'Realizada por '; strong: unaPregunta usuario nombre;
 			text: '. | ';
 			text: unaPregunta cantidadDeRespuestas; text: ' respuestas.'.
 	].
