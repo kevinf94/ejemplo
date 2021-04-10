@@ -6,8 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'usuario',
-		'creacion',
-		'votos'
+		'votos',
+		'fechaHoraCreacion'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
@@ -45,7 +45,7 @@ Post >> cantidadDeLikes [
 
 { #category : #'methods for tests' }
 Post >> creacion [
-	^creacion
+	^fechaHoraCreacion
 ]
 
 { #category : #internal }
@@ -60,7 +60,7 @@ Post >> esDelUsuario: unUsuario [
 
 { #category : #initializing }
 Post >> initialize [
-	creacion := DateAndTime now.
+	fechaHoraCreacion := DateAndTime now.
 	votos := OrderedCollection new.
 ]
 

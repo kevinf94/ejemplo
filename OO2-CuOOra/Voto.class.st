@@ -6,8 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'usuario',
-		'creacion',
-		'tipo'
+		'tipo',
+		'fechaHoraCreacion'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
@@ -24,7 +24,7 @@ Voto class >> likeDelUsuario: unUsuario [
 
 { #category : #accessing }
 Voto >> cambiar [
-	creacion := DateAndTime now.
+	fechaHoraCreacion := DateAndTime now.
 	(self esLike) ifTrue: [ tipo := 'dislike'. ^self. ].
 	tipo := 'like'.
 ]
@@ -53,5 +53,5 @@ Voto >> esLike [
 
 { #category : #initializing }
 Voto >> initialize [
-	creacion := DateAndTime now.
+	fechaHoraCreacion := DateAndTime now.
 ]

@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'nombre',
 		'contrasena',
-		'creacion',
-		'usuarios',
-		'topicos'
+		'usuariosSeguidos',
+		'topicos',
+		'fechaHoraCreacion'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
@@ -26,12 +26,12 @@ Usuario >> agregarTopicoDeInteres: unTopico [
 
 { #category : #accessing }
 Usuario >> agregarUsuarioParaSeguir: unUsuario [
-	^usuarios add: unUsuario
+	^usuariosSeguidos add: unUsuario
 ]
 
 { #category : #'methods for tests' }
 Usuario >> cantidadDeUsuariosSeguidos [
-	^usuarios size.
+	^usuariosSeguidos size.
 ]
 
 { #category : #'methods for tests' }
@@ -52,7 +52,7 @@ Usuario >> contrasena [
 
 { #category : #'methods for tests' }
 Usuario >> creacion [
-	^ creacion
+	^ fechaHoraCreacion
 ]
 
 { #category : #accessing }
@@ -62,7 +62,7 @@ Usuario >> esRelevante: unaPregunta [
 
 { #category : #internal }
 Usuario >> esRelevanteEnSeguidos: unaPregunta [
-	^usuarios anySatisfy: [ :unUsuario | unaPregunta esDelUsuario: unUsuario ]
+	^usuariosSeguidos anySatisfy: [ :unUsuario | unaPregunta esDelUsuario: unUsuario ]
 ]
 
 { #category : #internal }
@@ -72,8 +72,8 @@ Usuario >> esRelevanteEnTopicos: unaPregunta [
 
 { #category : #initializing }
 Usuario >> initialize [
-	creacion := DateAndTime now.
-	usuarios := OrderedCollection new.
+	fechaHoraCreacion := DateAndTime now.
+	usuariosSeguidos := OrderedCollection new.
 	topicos := OrderedCollection new.
 ]
 
@@ -99,5 +99,5 @@ Usuario >> tuNombreEs: unNombre [
 
 { #category : #'methods for tests' }
 Usuario >> usuarios [
-	^ usuarios
+	^usuariosSeguidos
 ]
