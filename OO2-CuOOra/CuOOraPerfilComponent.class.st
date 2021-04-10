@@ -23,7 +23,8 @@ CuOOraPerfilComponent >> renderCuerpoOn: aCanvas [
 		aCanvas heading level: 1; with: [ 
 			aCanvas text: 'Preguntas de ', usuario nombre, ':'.
 		].
-		aCanvas submitButton callback: [  ]; with: 'Seguir a ', usuario nombre.
+		(usuario = self session usuario)
+		ifFalse: [ aCanvas submitButton callback: [  ]; with: 'Seguir a ', usuario nombre. ].
 	].
 
 ]
