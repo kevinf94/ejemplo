@@ -5,7 +5,8 @@ Class {
 	#name : #StudyGroupComponent,
 	#superclass : #WAComponent,
 	#instVars : [
-		'group'
+		'group',
+		'var'
 	],
 	#category : #'Study group-ui'
 }
