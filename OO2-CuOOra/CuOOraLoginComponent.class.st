@@ -19,24 +19,16 @@ Class {
 }
 
 { #category : #callbacks }
-CuOOraLoginComponent >> login [
-	(self model userWithName: nombre protectedBy: contrasena)
-		ifNotNil: [ :unUsuario | self proceedWith: unUsuario ].
-	nombre := nil.
-	contrasena := nil
-]
-
-{ #category : #callbacks }
 CuOOraLoginComponent >> registerNewUser [
-	self call: RegisterComponent new
+	self call: CuOOraRegisterComponent new
 ]
 
 { #category : #rendering }
 CuOOraLoginComponent >> renderButtonsOn: aCanvas [
 	self renderSignInButtonOn: aCanvas.
-	"aCanvas horizontalRule.
-	aCanvas paragraph: '¬øNo tienes una cuenta?'.
-	self renderSignUpButtonOn: aCanvas"
+	aCanvas horizontalRule.
+	aCanvas paragraph: 'No tienes una cuenta?'.
+	self renderSignUpButtonOn: aCanvas
 ]
 
 { #category : #rendering }
@@ -50,6 +42,6 @@ CuOOraLoginComponent >> renderSignInButtonOn: aCanvas [
 { #category : #rendering }
 CuOOraLoginComponent >> renderSignUpButtonOn: aCanvas [
 	aCanvas submitButton
-		callback: [ "self registerNewUser" ];
+		callback: [ self registerNewUser ];
 		with: 'Registrarse'
 ]

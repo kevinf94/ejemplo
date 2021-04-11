@@ -62,6 +62,12 @@ CuOOra >> crearUnNuevoUsuarioConNombre: unNombreString contrasena: unaContrasena
 	^usuarios add: (Usuario conNombre: unNombreString contrasena: unaContrasenaString).
 ]
 
+{ #category : #accessing }
+CuOOra >> existeUsuarioConNombre: unNombre [
+	^ usuarios anySatisfy: [ :unUsuario | (unUsuario tuNombreEs: unNombre) ]
+	
+]
+
 { #category : #initializing }
 CuOOra >> initialize [
 	usuarios := OrderedCollection new.
