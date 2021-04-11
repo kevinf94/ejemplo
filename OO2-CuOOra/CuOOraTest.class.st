@@ -71,12 +71,11 @@ CuOOraTest >> setUp [
 { #category : #tests }
 CuOOraTest >> testAgregarPreguntaConTopicosTituloDescripcionUsuario [
 
-	|preguntas ask|
+	|ask|
 	
 	ask := sistema agregarPreguntaConTopicos: { topic1. } titulo: 'Test' descripcion: 'testing...' usuario: user1.
-	preguntas := sistema preguntas.
 	
-	self assert: (preguntas anySatisfy: [ :e | e = ask ]).
+	self assert: (sistema tenesLaPregunta: ask).
 	self assert: ask titulo equals: 'Test'.
 	self assert: ask descripcion equals: 'testing...'.
 	self assert: ask usuario equals: user1.
@@ -85,12 +84,11 @@ CuOOraTest >> testAgregarPreguntaConTopicosTituloDescripcionUsuario [
 { #category : #tests }
 CuOOraTest >> testAgregarRespuestaParaLaPreguntaTextoUsuario [
 
-	|resp ans|
+	|ans|
 	
 	ans := sistema agregarRespuestaParaLaPregunta: ask1 texto: 'Test' usuario: user3.
-	resp := ask1 respuestas.
 	
-	self assert: (resp anySatisfy: [ :e | e = ans ]).
+	self assert: (ask1 tenesLaRespuesta: ans).
 	self assert: ans texto equals: 'Test'.
 	self assert: ans usuario equals: user3.
 ]
@@ -98,12 +96,11 @@ CuOOraTest >> testAgregarRespuestaParaLaPreguntaTextoUsuario [
 { #category : #tests }
 CuOOraTest >> testAgregarTopicoConNombreDescripcion [
 
-	|topic topicos|
+	|topic|
 	
 	topic := sistema agregarTopicoConNombre: 'Test' descripcion: 'Desc'.
-	topicos := sistema topicos.
 	
-	self assert: (topicos anySatisfy: [ :e | e = topic ]).
+	self assert: (sistema tenesElTopico: topic).
 	self assert: topic nombre equals: 'Test'.
 	self assert: topic descripcion equals: 'Desc'.
 ]
@@ -115,7 +112,7 @@ CuOOraTest >> testAgregarTopicoDeInteresParaElUsuario [
 	sistema agregarTopicoDeInteres: topic1 paraElUsuario: user1.
 	topicos := user1 topicos.
 	
-	self assert: (topicos anySatisfy: [ :e | e = topic1 ]).
+	self assert: (topicos includes: topic1).
 
 	
 ]
@@ -129,7 +126,7 @@ CuOOraTest >> testBorrarLaPregunta [
 	borrada := sistema borrarLaPregunta: ask1.
 	
 	self assert: borrada equals: ask1.
-	self deny: (preguntas anySatisfy: [ :e | e = ask1 ]).
+	self deny: (preguntas includes: ask1).
 
 ]
 
@@ -138,10 +135,10 @@ CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
 	
 	|usuarios user|
 	
-	usuarios := sistema usuarios.
+	usuarios := sistema usuariosSeguidos.
 	user := sistema crearUnNuevoUsuarioConNombre: 'Test' contrasena: 'pass'.
 	
-	self assert: (usuarios anySatisfy: [ :e | e = user ]).
+	self assert: (usuarios includes: user).
 	self assert: user nombre equals: 'Test'.
 	self assert: user contrasena equals: 'pass'.
 ]
@@ -170,14 +167,14 @@ CuOOraTest >> testObtenerPreguntasRelevantesParaElUsuario [
 	|preguntas|
 	
 	preguntas := sistema obtenerPreguntasRelevantesParaElUsuario: user1.
-	self assert: (preguntas anySatisfy: [ :e | e = ask1 ]).
-	self assert: (preguntas anySatisfy: [ :e | e = ask2 ]).
-	self assert: (preguntas anySatisfy: [ :e | e = ask3 ]).
+	self assert: (preguntas includes: ask1).
+	self assert: (preguntas includes: ask2).
+	self assert: (preguntas includes: ask3).
 	
 	preguntas := sistema obtenerPreguntasRelevantesParaElUsuario: user2.
-	self assert: (preguntas anySatisfy: [ :e | e = ask1 ]).
-	self deny: (preguntas anySatisfy: [ :e | e = ask2 ]).
-	self assert: (preguntas anySatisfy: [ :e | e = ask3 ]).
+	self assert: (preguntas includes: ask1).
+	self deny: (preguntas includes: ask2).
+	self assert: (preguntas includes: ask3).
 
 ]
 
@@ -201,10 +198,10 @@ CuOOraTest >> testObtenerRespuestasDeLaPregunta [
 	ans := ask1 crearRespuestaConTexto: 'Test' usuario: user1.	
 	respuestas := sistema obtenerRespuestasDeLaPregunta: ask1.
 	self assert: respuestas size equals: 2.
-	self assert: (respuestas anySatisfy: [ :e | e = ans1 ]).
-	self deny: (respuestas anySatisfy: [ :e | e = ans2 ]).
-	self deny: (respuestas anySatisfy: [ :e | e = ans3 ]).
-	self assert: (respuestas anySatisfy: [ :e | e = ans ]).
+	self assert: (respuestas includes: ans1).
+	self deny: (respuestas includes: ans2).
+	self deny: (respuestas includes: ans3).
+	self assert: (respuestas includes: ans).
 ]
 
 { #category : #tests }
@@ -216,9 +213,9 @@ CuOOraTest >> testPreguntasDelUsuario [
 	self assert: preguntas isEmpty.
 	preguntas := sistema preguntasDelUsuario: user2.
 	self assert: preguntas size equals: 2.
-	self assert: (preguntas anySatisfy: [ :e | e = ask1 ]).
-	self assert: (preguntas anySatisfy: [ :e | e = ask2 ]).
-	self deny: (preguntas anySatisfy: [ :e | e = ask3 ]).
+	self assert: (preguntas includes: ask1).
+	self assert: (preguntas includes: ask2).
+	self deny: (preguntas includes: ask3).
 
 ]
 
@@ -229,8 +226,8 @@ CuOOraTest >> testRespuestasDelUsuario [
 	
 	respuestas := sistema respuestasDelUsuario: user1.
 	self assert: respuestas size equals: 2.
-	self assert: (respuestas anySatisfy: [ :e | e = ans1 ]).
-	self deny: (respuestas anySatisfy: [ :e | e = ans2 ]).
-	self assert: (respuestas anySatisfy: [ :e | e = ans3 ]).
+	self assert: (respuestas includes: ans1).
+	self deny: (respuestas includes: ans2).
+	self assert: (respuestas includes: ans3).
 	
 ]

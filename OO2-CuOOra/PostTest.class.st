@@ -35,7 +35,7 @@ PostTest >> testAgregarDislikeDelUsuario [
 	self assert: voto esDislike.
 	pregunta agregarLikeDelUsuario: usuario1.
 	self assert: pregunta cantidadDeDislikes equals: 0.
-	self assert: (pregunta votos anySatisfy: [ :v | v = voto ]).
+	self assert: (pregunta votos includes: voto).
 	self deny: voto esDislike.
 ]
 
@@ -51,7 +51,7 @@ PostTest >> testAgregarLikeDelUsuario [
 	self assert: voto esLike.
 	pregunta agregarDislikeDelUsuario: usuario1.
 	self assert: pregunta cantidadDeLikes equals: 0.
-	self assert: (pregunta votos anySatisfy: [ :v | v = voto ]).
+	self assert: (pregunta votos includes: voto).
 	self deny: voto esLike.
 ]
 
@@ -64,7 +64,7 @@ PostTest >> testEsDelUsuario [
 
 { #category : #tests }
 PostTest >> testPuntaje [
-	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+	"Se testea Puntaje solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
 	
 	self assert: pregunta puntaje equals: 0.
 	pregunta agregarLikeDelUsuario: usuario1.
@@ -78,20 +78,22 @@ PostTest >> testPuntaje [
 
 { #category : #tests }
 PostTest >> testQuitarDislikeDelUsuario [
-	self assert: pregunta puntaje equals: 0.
+
+	self deny: (pregunta tieneDislikeDelUsuario: usuario1).
 	pregunta agregarDislikeDelUsuario: usuario1.
-	self assert: pregunta puntaje equals: -1.
+	self assert: (pregunta tieneDislikeDelUsuario: usuario1).
 	pregunta quitarDislikeDelUsuario: usuario1.
-	self assert: pregunta puntaje equals: 0.
+	self deny: (pregunta tieneDislikeDelUsuario: usuario1).
 
 ]
 
 { #category : #tests }
 PostTest >> testQuitarLikeDelUsuario [
-	self assert: pregunta puntaje equals: 0.
+
+	self deny: (pregunta tieneLikeDelUsuario: usuario1).
 	pregunta agregarLikeDelUsuario: usuario1.
-	self assert: pregunta puntaje equals: 1.
+	self assert: (pregunta tieneLikeDelUsuario: usuario1).
 	pregunta quitarLikeDelUsuario: usuario1.
-	self assert: pregunta puntaje equals: 0.
+	self deny: (pregunta tieneLikeDelUsuario: usuario1).
 
 ]

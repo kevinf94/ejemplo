@@ -98,6 +98,6 @@ Usuario >> tuNombreEs: unNombre [
 ]
 
 { #category : #'methods for tests' }
-Usuario >> usuarios [
+Usuario >> usuariosSeguidos [
 	^usuariosSeguidos
 ]

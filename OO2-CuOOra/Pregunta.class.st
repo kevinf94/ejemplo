@@ -60,9 +60,14 @@ Pregunta >> obtenerRespuestasDelUsuario: unUsuario [
 	^respuestas select: [ :unaRespuesta | unaRespuesta esDelUsuario: unUsuario ]
 ]
 
-{ #category : #'methods for tests' }
+{ #category : #accessing }
 Pregunta >> respuestas [
 	^respuestas
+]
+
+{ #category : #'methods for tests' }
+Pregunta >> tenesLaRespuesta: unaRespuesta [
+	^respuestas includes: unaRespuesta
 ]
 
 { #category : #accessing }

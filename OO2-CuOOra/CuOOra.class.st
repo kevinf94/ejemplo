@@ -39,6 +39,7 @@ CuOOra >> agregarPreguntaConTopicos: unosTopicos titulo: unTitulo descripcion: u
 
 { #category : #accessing }
 CuOOra >> agregarRespuestaParaLaPregunta: unaPregunta texto: unTexto usuario: unUsuario [
+	"metodo que ya no sirve porque existe la interfaz web"
 	^unaPregunta crearRespuestaConTexto: unTexto usuario: unUsuario
 ]
 
@@ -49,6 +50,7 @@ CuOOra >> agregarTopicoConNombre: unNombreString descripcion: unaDescripcionStri
 
 { #category : #accessing }
 CuOOra >> agregarTopicoDeInteres: unTopico paraElUsuario: unUsuario [
+	"metodo que ya no sirve porque ahora existe la interfaz web"
 	^unUsuario agregarTopicoDeInteres: unTopico
 ]
 
@@ -180,10 +182,12 @@ CuOOra >> obtenerPuntajeDelUsuario: unUsuario [
 
 { #category : #accessing }
 CuOOra >> obtenerRespuestasDeLaPregunta: unaPregunta [
+	"debería estar este mensaje dentro de la clase Pregunta? es envidia de atributos?
+	unaPregunta obtenerRespuestasOrdenadasPorPuntajeDeMayorAMenor????"
 	^unaPregunta respuestas asSortedCollection: [ :unaRespuesta :otraRespuesta | unaRespuesta puntaje > otraRespuesta puntaje ]
 ]
 
-{ #category : #'methods for tests' }
+{ #category : #accessing }
 CuOOra >> preguntas [
 	^ preguntas
 ]
@@ -212,6 +216,16 @@ CuOOra >> respuestasDelUsuario: unUsuario [
 ]
 
 { #category : #'methods for tests' }
+CuOOra >> tenesElTopico: unTopico [
+	^topicos includes: unTopico
+]
+
+{ #category : #'methods for tests' }
+CuOOra >> tenesLaPregunta: unaPregunta [
+	^preguntas includes: unaPregunta 
+]
+
+{ #category : #accessing }
 CuOOra >> topicos [
 	^ topicos
 ]
@@ -230,7 +244,7 @@ CuOOra >> userWithName: unNombre protectedBy: unaContrasena [
 		ifNone: [ nil ]
 ]
 
-{ #category : #'methods for tests' }
-CuOOra >> usuarios [
+{ #category : #accessing }
+CuOOra >> usuariosSeguidos [
 	^ usuarios
 ]
