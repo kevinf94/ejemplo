@@ -133,6 +133,7 @@ CuOOrLayoutComponent >> renderPreguntaRelevante: unaPregunta tituloOn: aCanvas [
 			with: [ aCanvas emphasis: [ aCanvas strong: [ aCanvas big: unaPregunta titulo ]. ]. ].
 	].
 
+
 ]
 
 { #category : #private }

@@ -3,235 +3,234 @@ Class {
 	#superclass : #TestCase,
 	#instVars : [
 		'sistema',
-		'usuario',
-		'pregunta',
-		'respuesta',
-		'voto',
-		'topico'
+		'topic1',
+		'topic2',
+		'topic3',
+		'user1',
+		'user2',
+		'user3',
+		'ask1',
+		'ask2',
+		'ask3',
+		'ans1',
+		'ans2',
+		'ans3'
 	],
 	#category : #'OO2-CuOOra-TestDeUnidad'
 }
 
-{ #category : #internal }
-CuOOraTest >> crearPreguntasParaElsistema: unSistema usuario: unUsuario cantidad: unaCantidad topicosDesde: inicio topicosHasta: fin [
-
-	|unosTopicos unTitulo unaDescripcion|
-	unosTopicos := OrderedCollection new.
-	inicio to: fin do: [ :x | unosTopicos add: (unSistema topicos at: x). ].
-	1 to: unaCantidad do: [ :x | 
-		unTitulo := ('titulo',x asString).
-		unaDescripcion := ('descripcion',x asString).
-		sistema agregarPreguntaConTopicos: unosTopicos titulo: unTitulo descripcion: unaDescripcion usuario: usuario.
-		].
-	
-]
-
-{ #category : #internal }
-CuOOraTest >> crearRespuestasParaElsistema: unSistema pregunta: unaPregunta usuario: unUsuario cantidad: unaCantidad [
-
-	|unTexto|
-	1 to: unaCantidad do: [ :x | 
-		unTexto := ('texto',x asString).
-		unSistema agregarRespuestaParaLaPregunta: unaPregunta texto: unTexto usuario: unUsuario
-		].
-	
-]
-
-{ #category : #internal }
-CuOOraTest >> crearTopicosParaElsistema: unSistema cantidad: unaCantidad [
-	1 to: unaCantidad do: [ :x | unSistema agregarTopicoConNombre: ('topico',x asString) descripcion: ('descripcion',x asString) ]
-]
-
-{ #category : #internal }
-CuOOraTest >> crearUsuariosParaElsistema: unSistema cantidad: unaCantidad [
-	1 to: unaCantidad do: [ :x | unSistema crearUnNuevoUsuarioConNombre: ('user',x asString) contrasena: ('pass',x asString) ]
-]
-
 { #category : #running }
 CuOOraTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
-	
-	">>-------arreglar envidia de atributos---------------------------------------------------"
+	|desc|
+
 	sistema := CuOOra new.
 	
-	self crearUsuariosParaElsistema: sistema cantidad: 20.
-	self crearTopicosParaElsistema: sistema cantidad: 20.
+	topic1 := 'Pharo'. desc := 'Entorno de desarrollo para smalltalk.'.
+	topic1 := sistema agregarTopicoConNombre: topic1 descripcion: desc.
+	topic2 := 'OO2'. desc := 'Orientación a objetos 2.'.
+	topic2 := sistema agregarTopicoConNombre: topic2 descripcion: desc.
+	topic3 := 'Info-UNLP'. desc := 'Facultad de Informática de la UNLP.'.
+	topic3 := sistema agregarTopicoConNombre: topic3 descripcion: desc.
 	
-	(sistema usuarios at: 1) agregarUsuarioParaSeguir: (sistema usuarios at: 2). 
-	(sistema usuarios at: 1) agregarUsuarioParaSeguir: (sistema usuarios at: 4).
-	(sistema usuarios at: 2) agregarUsuarioParaSeguir: (sistema usuarios at: 3).
-	(sistema usuarios at: 2) agregarUsuarioParaSeguir: (sistema usuarios at: 5).
-	(sistema usuarios at: 3) agregarUsuarioParaSeguir: (sistema usuarios at: 1).
-	(sistema usuarios at: 3) agregarUsuarioParaSeguir: (sistema usuarios at: 7).
+	user1 := sistema crearUnNuevoUsuarioConNombre: 'user1' contrasena: 'user1'.
+	user2 := sistema crearUnNuevoUsuarioConNombre: 'user2' contrasena: 'user2'.
+	user3 := sistema crearUnNuevoUsuarioConNombre: 'user3' contrasena: 'user3'.
 	
-	sistema agregarTopicoDeInteres: (sistema topicos at: 5) paraElUsuario: (sistema usuarios at: 1).
-	sistema agregarTopicoDeInteres: (sistema topicos at: 4) paraElUsuario: (sistema usuarios at: 2).
-	sistema agregarTopicoDeInteres: (sistema topicos at: 3) paraElUsuario: (sistema usuarios at: 2).
-	sistema agregarTopicoDeInteres: (sistema topicos at: 2) paraElUsuario: (sistema usuarios at: 3).
-	sistema agregarTopicoDeInteres: (sistema topicos at: 1) paraElUsuario: (sistema usuarios at: 5).
+	user1 agregarUsuarioParaSeguir: user2.
+	user2 agregarUsuarioParaSeguir: user3.
 	
-	usuario := sistema usuarios at: 1.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 1 topicosDesde: 1 topicosHasta: 2.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 2 topicosDesde: 3 topicosHasta: 3.
-	usuario := sistema usuarios at: 2.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 3 topicosDesde: 4 topicosHasta: 5.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 1 topicosDesde: 2 topicosHasta: 2.
-	usuario := sistema usuarios at: 3.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 1 topicosDesde: 5 topicosHasta: 7.
+	user1 agregarTopicoDeInteres: topic2.
+	user2 agregarTopicoDeInteres: topic1.
+	user3 agregarTopicoDeInteres: topic3.
 	
-	pregunta := sistema preguntas at: 1.
-	usuario := sistema usuarios at: 3.
-	self crearRespuestasParaElsistema: sistema pregunta: pregunta usuario: usuario cantidad: 1.
-	usuario := sistema usuarios at: 4.
-	self crearRespuestasParaElsistema: sistema pregunta: pregunta usuario: usuario cantidad: 2.
-	usuario := sistema usuarios at: 5.
-	self crearRespuestasParaElsistema: sistema pregunta: pregunta usuario: usuario cantidad: 1.
+	ask1 := '¿Cómo se usa Pharo?'. desc := 'Lo instale y no funciona.'.
+	ask1 := sistema agregarPreguntaConTopicos: { topic1. topic2. } titulo: ask1 descripcion: desc usuario: user2.
+	ask1 agregarLikeDelUsuario: user1.
+	ask1 agregarLikeDelUsuario: user3.
+	desc := 'Hay que leer el manual.'.
+	ans1 := sistema agregarRespuestaParaLaPregunta: ask1 texto: desc usuario: user1.
+
+	ask2 := '¿Dónde esta el centro de estudiantes?'. desc := 'No lo encuentro en el mapa.'.
+	ask2 := sistema agregarPreguntaConTopicos: { topic3. } titulo: ask1 descripcion: desc usuario: user2.
+	ask2 agregarDislikeDelUsuario: user3.
+	ask2 agregarLikeDelUsuario: user1.
+	desc := 'Pregunta en la fotocopiadora.'.
+	ans2 := sistema agregarRespuestaParaLaPregunta: ask2 texto: desc usuario: user3.
 	
-	pregunta agregarLikeDelUsuario: (sistema usuarios at: 4).
-	respuesta := pregunta respuestas at: 2. respuesta agregarLikeDelUsuario: (sistema usuarios at: 5).
-	respuesta := pregunta respuestas at: 3. respuesta agregarDislikeDelUsuario: (sistema usuarios at: 3).
-	respuesta := pregunta respuestas at: 4. respuesta agregarDislikeDelUsuario: (sistema usuarios at: 7).
+	ask3 := '¿Cual es la diferencia entre herencia y composición?'. desc := 'Aprobe Taller, AyED, OO1 y sigo sin entender.'.
+	ask3 := sistema agregarPreguntaConTopicos: { topic2. } titulo: ask3 descripcion: desc usuario: user3.
+	ask3 agregarDislikeDelUsuario: user1.
+	ask3 agregarDislikeDelUsuario: user2.
+	desc := 'jajajaja'.
+	ans3 := sistema agregarRespuestaParaLaPregunta: ask3 texto: desc usuario: user1.
+	ans3 agregarLikeDelUsuario: user2.
+	
 ]
 
 { #category : #tests }
 CuOOraTest >> testAgregarPreguntaConTopicosTituloDescripcionUsuario [
 
-	|cantidad|
-	cantidad := sistema preguntas size.
+	|preguntas ask|
 	
-	usuario := sistema usuarios at: 10.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 2 topicosDesde: 10 topicosHasta: 11.
+	ask := sistema agregarPreguntaConTopicos: { topic1. } titulo: 'Test' descripcion: 'testing...' usuario: user1.
+	preguntas := sistema preguntas.
 	
-	self assert: sistema preguntas size equals: cantidad + 2.
-	pregunta := sistema preguntas at: cantidad + 1.
-	self assert: pregunta titulo equals: 'titulo1'.
-	self assert: pregunta topicos size equals: 2.
-	self assert: (pregunta topicos at: 2) nombre equals: 'topico11'.
+	self assert: (preguntas anySatisfy: [ :e | e = ask ]).
+	self assert: ask titulo equals: 'Test'.
+	self assert: ask descripcion equals: 'testing...'.
+	self assert: ask usuario equals: user1.
 ]
 
 { #category : #tests }
 CuOOraTest >> testAgregarRespuestaParaLaPreguntaTextoUsuario [
 
-	self crearUsuariosParaElsistema: sistema cantidad: 10.
-	self crearTopicosParaElsistema: sistema cantidad: 10.
+	|resp ans|
 	
-	usuario := sistema usuarios at: 1.
-	self crearPreguntasParaElsistema: sistema usuario: usuario cantidad: 1 topicosDesde: 1 topicosHasta: 1.
-	pregunta := sistema preguntas at: 1.
+	ans := sistema agregarRespuestaParaLaPregunta: ask1 texto: 'Test' usuario: user3.
+	resp := ask1 respuestas.
 	
-	usuario := sistema usuarios at: 2.
-	self crearRespuestasParaElsistema: sistema pregunta: pregunta usuario: usuario cantidad: 1.
-	
-	respuesta := (sistema preguntas at: 1) respuestas at: 1.
-	self assert: respuesta texto equals: 'texto1'.
+	self assert: (resp anySatisfy: [ :e | e = ans ]).
+	self assert: ans texto equals: 'Test'.
+	self assert: ans usuario equals: user3.
 ]
 
 { #category : #tests }
 CuOOraTest >> testAgregarTopicoConNombreDescripcion [
 
-	|cantidad|
-	cantidad := sistema topicos size.
+	|topic topicos|
 	
-	sistema agregarTopicoConNombre: 'c' descripcion: 'code'.
+	topic := sistema agregarTopicoConNombre: 'Test' descripcion: 'Desc'.
+	topicos := sistema topicos.
 	
-	self assert: sistema topicos size equals: cantidad + 1.
-	self assert: (sistema topicos at: cantidad + 1) nombre equals: 'c'.
+	self assert: (topicos anySatisfy: [ :e | e = topic ]).
+	self assert: topic nombre equals: 'Test'.
+	self assert: topic descripcion equals: 'Desc'.
 ]
 
 { #category : #tests }
 CuOOraTest >> testAgregarTopicoDeInteresParaElUsuario [
-	
-	usuario := sistema usuarios at: 10.
-	topico := sistema topicos at: 10.
 
-	sistema agregarTopicoDeInteres: topico paraElUsuario: usuario.
+	|topicos|	
+	sistema agregarTopicoDeInteres: topic1 paraElUsuario: user1.
+	topicos := user1 topicos.
 	
-	self assert: (usuario topicos at: 1) equals: topico.
-	self assert: (usuario topicos at: 1) nombre equals: 'topico10'.
+	self assert: (topicos anySatisfy: [ :e | e = topic1 ]).
+
+	
 ]
 
 { #category : #tests }
 CuOOraTest >> testBorrarLaPregunta [
 
-	|cantidad|
-	cantidad := sistema preguntas size.
+	|preguntas borrada|
 	
-	pregunta := sistema preguntas at: 4.
-	sistema borrarLaPregunta: pregunta.
-	self assert: sistema preguntas size equals: cantidad - 1.
-	"ver si realmente la instancia de la pregunta no esta mas en la coleccion"
+	preguntas := sistema preguntas.
+	borrada := sistema borrarLaPregunta: ask1.
+	
+	self assert: borrada equals: ask1.
+	self deny: (preguntas anySatisfy: [ :e | e = ask1 ]).
+
 ]
 
 { #category : #tests }
 CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
 	
-	|cantidad|
-	cantidad := sistema usuarios size.
-	sistema crearUnNuevoUsuarioConNombre: 'juan perez' contrasena: 'asd123'.
+	|usuarios user|
 	
-	self assert: sistema usuarios size equals: cantidad + 1.
-	self assert: (sistema usuarios at: cantidad + 1) nombre equals: 'juan perez'.
+	usuarios := sistema usuarios.
+	user := sistema crearUnNuevoUsuarioConNombre: 'Test' contrasena: 'pass'.
+	
+	self assert: (usuarios anySatisfy: [ :e | e = user ]).
+	self assert: user nombre equals: 'Test'.
+	self assert: user contrasena equals: 'pass'.
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerLasPreguntasConElTopico [
 
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 1)) size equals: 1.
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 2)) size equals: 2.
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 3)) size equals: 2.
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 4)) size equals: 3.
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 5)) size equals: 4.
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 6)) size equals: 1.
-	self assert: (sistema obtenerLasPreguntasConElTopico: (sistema topicos at: 20)) size equals: 0.
+	|preguntas|
+
+	preguntas := sistema obtenerLasPreguntasConElTopico: topic1.
+	self assert: preguntas size equals: 1.
+	preguntas do: [ :p | self assert: (p tieneElTopico: topic1). ].
+
+	preguntas := sistema obtenerLasPreguntasConElTopico: topic2.
+	self assert: preguntas size equals: 2.
+	preguntas do: [ :p | self assert: (p tieneElTopico: topic2). ].
+
+	preguntas := sistema obtenerLasPreguntasConElTopico: topic3.
+	self assert: preguntas size equals: 1.
+	preguntas do: [ :p | self assert: (p tieneElTopico: topic3). ].
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerPreguntasRelevantesParaElUsuario [
+
+	|preguntas|
 	
-	pregunta := sistema obtenerPreguntasRelevantesParaElUsuario: (sistema usuarios at: 1).
+	preguntas := sistema obtenerPreguntasRelevantesParaElUsuario: user1.
+	self assert: (preguntas anySatisfy: [ :e | e = ask1 ]).
+	self assert: (preguntas anySatisfy: [ :e | e = ask2 ]).
+	self assert: (preguntas anySatisfy: [ :e | e = ask3 ]).
 	
-	self assert: pregunta size equals: 5.
+	preguntas := sistema obtenerPreguntasRelevantesParaElUsuario: user2.
+	self assert: (preguntas anySatisfy: [ :e | e = ask1 ]).
+	self deny: (preguntas anySatisfy: [ :e | e = ask2 ]).
+	self assert: (preguntas anySatisfy: [ :e | e = ask3 ]).
+
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerPuntajeDelUsuario [
-	self assert: (sistema obtenerPuntajeDelUsuario: (sistema usuarios at: 1)) equals: 61.
-	self assert: (sistema obtenerPuntajeDelUsuario: (sistema usuarios at: 2)) equals: 80.
-	self assert: (sistema obtenerPuntajeDelUsuario: (sistema usuarios at: 3)) equals: 70.
-	self assert: (sistema obtenerPuntajeDelUsuario: (sistema usuarios at: 4)) equals: 100.
-	self assert: (sistema obtenerPuntajeDelUsuario: (sistema usuarios at: 5)) equals: 49.
-	self assert: (sistema obtenerPuntajeDelUsuario: (sistema usuarios at: 6)) equals: 0.
+
+	|user|
+	user := sistema crearUnNuevoUsuarioConNombre: 'Test' contrasena: 'Test'.
+	self assert: (sistema obtenerPuntajeDelUsuario: user1) equals: 101.
+	self assert: (sistema obtenerPuntajeDelUsuario: user2) equals: 42.
+	self assert: (sistema obtenerPuntajeDelUsuario: user3) equals: 68.
+	self assert: (sistema obtenerPuntajeDelUsuario: user) equals: 0.
+	
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerRespuestasDeLaPregunta [
-	respuesta := sistema obtenerRespuestasDeLaPregunta: (sistema preguntas at: 1).
-	self assert: respuesta size equals: 4.
 	
-	respuesta := sistema obtenerRespuestasDeLaPregunta: (sistema preguntas at: 2).
-	self assert: respuesta size equals: 0.
+	|respuestas ans|
+
+	ans := ask1 crearRespuestaConTexto: 'Test' usuario: user1.	
+	respuestas := sistema obtenerRespuestasDeLaPregunta: ask1.
+	self assert: respuestas size equals: 2.
+	self assert: (respuestas anySatisfy: [ :e | e = ans1 ]).
+	self deny: (respuestas anySatisfy: [ :e | e = ans2 ]).
+	self deny: (respuestas anySatisfy: [ :e | e = ans3 ]).
+	self assert: (respuestas anySatisfy: [ :e | e = ans ]).
 ]
 
 { #category : #tests }
 CuOOraTest >> testPreguntasDelUsuario [
 
-	pregunta := sistema preguntasDelUsuario: (sistema usuarios at: 1).
-	self assert: pregunta size equals: 3.
-	pregunta := sistema preguntasDelUsuario: (sistema usuarios at: 2).
-	self assert: pregunta size equals: 4.
-	pregunta := sistema preguntasDelUsuario: (sistema usuarios at: 3).
-	self assert: pregunta size equals: 1.
-	pregunta := sistema preguntasDelUsuario: (sistema usuarios at: 4).
-	self assert: pregunta size equals: 0.
+	|preguntas|
+	
+	preguntas := sistema preguntasDelUsuario: user1.
+	self assert: preguntas isEmpty.
+	preguntas := sistema preguntasDelUsuario: user2.
+	self assert: preguntas size equals: 2.
+	self assert: (preguntas anySatisfy: [ :e | e = ask1 ]).
+	self assert: (preguntas anySatisfy: [ :e | e = ask2 ]).
+	self deny: (preguntas anySatisfy: [ :e | e = ask3 ]).
+
 ]
 
 { #category : #tests }
 CuOOraTest >> testRespuestasDelUsuario [
 
-	respuesta := sistema respuestasDelUsuario: (sistema usuarios at: 1).
-	self assert: respuesta size equals: 0.
+	|respuestas|
 	
-	respuesta := sistema respuestasDelUsuario: (sistema usuarios at: 4).
-	self assert: respuesta size equals: 2.
+	respuestas := sistema respuestasDelUsuario: user1.
+	self assert: respuestas size equals: 2.
+	self assert: (respuestas anySatisfy: [ :e | e = ans1 ]).
+	self deny: (respuestas anySatisfy: [ :e | e = ans2 ]).
+	self assert: (respuestas anySatisfy: [ :e | e = ans3 ]).
 	
 ]

@@ -35,7 +35,7 @@ Pregunta >> conTopicos: unosTopicos titulo: unTitulo descripcion: unaDescripcion
 
 { #category : #accessing }
 Pregunta >> crearRespuestaConTexto: unTexto usuario: unUsuario [
-	respuestas add: (Respuesta conTexto: unTexto usuario: unUsuario)
+	^respuestas add: (Respuesta conTexto: unTexto usuario: unUsuario)
 ]
 
 { #category : #'methods for tests' }

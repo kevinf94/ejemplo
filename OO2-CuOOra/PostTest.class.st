@@ -4,8 +4,6 @@ Class {
 	#instVars : [
 		'pregunta',
 		'respuesta',
-		'voto',
-		'usuario',
 		'topicos',
 		'usuario1',
 		'usuario2'
@@ -27,27 +25,47 @@ PostTest >> setUp [
 
 { #category : #tests }
 PostTest >> testAgregarDislikeDelUsuario [
+	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+
+	|voto|
 	self assert: pregunta cantidadDeDislikes equals: 0.
 	pregunta agregarDislikeDelUsuario: usuario1.
 	self assert: pregunta cantidadDeDislikes equals: 1.
+	voto := pregunta votos detect: [ :v | v esDelUsuario: usuario1 ].
+	self assert: voto esDislike.
+	pregunta agregarLikeDelUsuario: usuario1.
+	self assert: pregunta cantidadDeDislikes equals: 0.
+	self assert: (pregunta votos anySatisfy: [ :v | v = voto ]).
+	self deny: voto esDislike.
 ]
 
 { #category : #tests }
 PostTest >> testAgregarLikeDelUsuario [
-	self assert: pregunta likes size equals: 0.
+	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+
+	|voto|
+	self assert: pregunta cantidadDeLikes equals: 0.
 	pregunta agregarLikeDelUsuario: usuario1.
-	self assert: pregunta likes size equals: 1.
+	self assert: pregunta cantidadDeLikes equals: 1.
+	voto := pregunta votos detect: [ :v | v esDelUsuario: usuario1 ].
+	self assert: voto esLike.
+	pregunta agregarDislikeDelUsuario: usuario1.
+	self assert: pregunta cantidadDeLikes equals: 0.
+	self assert: (pregunta votos anySatisfy: [ :v | v = voto ]).
+	self deny: voto esLike.
 ]
 
 { #category : #tests }
 PostTest >> testEsDelUsuario [
-	"solo se hace el test con una instancia de pregunta porque una instancia de respuesta lo hereda"
+	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el atributo."
 	self assert: (pregunta esDelUsuario: usuario1).
 	self deny: (pregunta esDelUsuario: usuario2).
 ]
 
 { #category : #tests }
 PostTest >> testPuntaje [
+	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+	
 	self assert: pregunta puntaje equals: 0.
 	pregunta agregarLikeDelUsuario: usuario1.
 	pregunta agregarLikeDelUsuario: usuario2.

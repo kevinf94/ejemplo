@@ -1,5 +1,9 @@
 "
-.
+|miAplicacion|
+CuOOra clearSoleInstance.
+WAAdmin unregister: 'cuoora'.
+miAplicacion := WAAdmin register: CuOOraLoginComponent asApplicationAt: 'cuoora'.
+miAplicacion sessionClass: CuOOraSessionWithUser.
 "
 Class {
 	#name : #CuOOraAccessingComponent,
