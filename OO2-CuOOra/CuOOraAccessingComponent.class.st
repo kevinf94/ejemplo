@@ -21,6 +21,14 @@ CuOOraAccessingComponent >> contrasena: anObject [
 	contrasena := anObject
 ]
 
+{ #category : #callbacks }
+CuOOraAccessingComponent >> login [
+	(self model userWithName: nombre protectedBy: contrasena)
+		ifNotNil: [ :unUsuario | self proceedWith: unUsuario ].
+	nombre := nil.
+	contrasena := nil
+]
+
 { #category : #accessing }
 CuOOraAccessingComponent >> model [
 	^CuOOra soleInstance
@@ -77,7 +85,7 @@ CuOOraAccessingComponent >> renderContentOn: aCanvas [
 CuOOraAccessingComponent >> renderInputElementsOn: aCanvas [
 	aCanvas paragraph: [ aCanvas label: [ aCanvas strong: 'Nombre:'].
 	aCanvas space. aCanvas textInput on: #nombre of: self ].
-	aCanvas paragraph: [ aCanvas label: [ aCanvas strong: 'Contrase√±a:' ].
+	aCanvas paragraph: [ aCanvas label: [ aCanvas strong: 'Contraseña:' ].
 	aCanvas space. aCanvas passwordInput on: #contrasena of: self ]
 ]
 
