@@ -5,7 +5,8 @@ Class {
 	#name : #CuOOraRegisterComponent,
 	#superclass : #CuOOraAccessingComponent,
 	#instVars : [
-		'existeUsuario'
+		'existeUsuario',
+		'usuarioExistente'
 	],
 	#category : #'OO2-CuOOra-InterfazWeb'
 }
@@ -23,12 +24,15 @@ CuOOraRegisterComponent >> initialize [
 
 { #category : #rendering }
 CuOOraRegisterComponent >> registerAndLogin [
-	(self model userWithName: nombre protectedBy: contrasena)
-		ifNil: [ self agregarUsuarioACuoora. self login ].
-   existeUsuario := true.
+	(self usuarioYContrasenaOK)
+	    ifTrue: [
+	(self model existeUsuarioConNombre: nombre)
+		ifTrue: [ usuarioExistente := nombre ]
+		ifFalse: [ self agregarUsuarioACuoora . self login ]
+].
+
 	nombre := nil.
-	contrasena := nil.
-	
+	contrasena := nil
 ]
 
 { #category : #rendering }
@@ -42,6 +46,12 @@ CuOOraRegisterComponent >> renderButtonsOn: aCanvas [
 CuOOraRegisterComponent >> renderContentOn: aCanvas [
 	super renderContentOn: aCanvas .
 	aCanvas horizontalRule.
-	existeUsuario ifTrue: [  
-	aCanvas paragraph:[ aCanvas text:'El nombre de usuario ingresado ya existe, intente otro.']].
+	((usuarioExistente isNotNil) and:[ usuarioExistente isNotEmpty]  ) ifTrue: [  
+	aCanvas paragraph:[ aCanvas text:'El nombre de usuario "',usuarioExistente ,'" ya existe, intente otro.']].
+]
+
+{ #category : #rendering }
+CuOOraRegisterComponent >> usuarioYContrasenaOK [
+	^((nombre isNotNil) & (nombre isNotEmpty)  & (contrasena isNotNil) & (contrasena isNotEmpty))
+	
 ]
