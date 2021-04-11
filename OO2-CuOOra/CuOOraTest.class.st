@@ -70,6 +70,7 @@ CuOOraTest >> setUp [
 
 { #category : #tests }
 CuOOraTest >> testAgregarPreguntaConTopicosTituloDescripcionUsuario [
+	"Se verifica la correcta creación de una pregunta."
 
 	|ask|
 	
@@ -83,6 +84,7 @@ CuOOraTest >> testAgregarPreguntaConTopicosTituloDescripcionUsuario [
 
 { #category : #tests }
 CuOOraTest >> testAgregarRespuestaParaLaPreguntaTextoUsuario [
+	"Se veriifca la correcta creación de una respuesta."
 
 	|ans|
 	
@@ -95,6 +97,7 @@ CuOOraTest >> testAgregarRespuestaParaLaPreguntaTextoUsuario [
 
 { #category : #tests }
 CuOOraTest >> testAgregarTopicoConNombreDescripcion [
+	"Se verifica la correcta creación de un tópico."
 
 	|topic|
 	
@@ -107,6 +110,7 @@ CuOOraTest >> testAgregarTopicoConNombreDescripcion [
 
 { #category : #tests }
 CuOOraTest >> testAgregarTopicoDeInteresParaElUsuario [
+	"Se verifica la correcta adición de un tópico."
 
 	|topicos|	
 	sistema agregarTopicoDeInteres: topic1 paraElUsuario: user1.
@@ -119,19 +123,21 @@ CuOOraTest >> testAgregarTopicoDeInteresParaElUsuario [
 
 { #category : #tests }
 CuOOraTest >> testBorrarLaPregunta [
+	"Se verifica la correcta eliminación de una pregunta."
 
 	|preguntas borrada|
 	
 	preguntas := sistema preguntas.
 	borrada := sistema borrarLaPregunta: ask1.
 	
-	self assert: borrada equals: ask1.
 	self deny: (preguntas includes: ask1).
-
+	self deny: (preguntas includes: borrada).
+	self assert: borrada equals: ask1.
 ]
 
 { #category : #tests }
 CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
+	"Se verifica la correcta creación de un nuevo usuario."
 	
 	|usuarios user|
 	
@@ -145,24 +151,26 @@ CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
 
 { #category : #tests }
 CuOOraTest >> testObtenerLasPreguntasConElTopico [
+	"Se verifica la correcta obetención de una colección de preguntas que contienen un determinado tópico."
 
 	|preguntas|
 
 	preguntas := sistema obtenerLasPreguntasConElTopico: topic1.
 	self assert: preguntas size equals: 1.
-	preguntas do: [ :p | self assert: (p tieneElTopico: topic1). ].
+	self assert: (preguntas allSatisfy: [ :p | p tieneElTopico: topic1. ]).
 
 	preguntas := sistema obtenerLasPreguntasConElTopico: topic2.
 	self assert: preguntas size equals: 2.
-	preguntas do: [ :p | self assert: (p tieneElTopico: topic2). ].
+	self assert: (preguntas allSatisfy: [ :p | p tieneElTopico: topic2. ]).
 
 	preguntas := sistema obtenerLasPreguntasConElTopico: topic3.
 	self assert: preguntas size equals: 1.
-	preguntas do: [ :p | self assert: (p tieneElTopico: topic3). ].
+	self assert: (preguntas allSatisfy: [ :p | p tieneElTopico: topic3. ]).
 ]
 
 { #category : #tests }
 CuOOraTest >> testObtenerPreguntasRelevantesParaElUsuario [
+	"Se verifica la correcta obtención de una colección de preguntas que son relevantes para un usuario determinado."
 
 	|preguntas|
 	
@@ -181,6 +189,8 @@ CuOOraTest >> testObtenerPreguntasRelevantesParaElUsuario [
 { #category : #tests }
 CuOOraTest >> testObtenerPuntajeDelUsuario [
 
+	"Se verifica el correcto cálculo de puntaje de un usuario determinado."
+
 	|user|
 	user := sistema crearUnNuevoUsuarioConNombre: 'Test' contrasena: 'Test'.
 	self assert: (sistema obtenerPuntajeDelUsuario: user1) equals: 101.
@@ -192,7 +202,7 @@ CuOOraTest >> testObtenerPuntajeDelUsuario [
 
 { #category : #tests }
 CuOOraTest >> testObtenerRespuestasDeLaPregunta [
-	
+	"Se verifica la correcta creación de una respuesta para una pregunta determinada."
 	|respuestas ans|
 
 	ans := ask1 crearRespuestaConTexto: 'Test' usuario: user1.	
@@ -206,7 +216,7 @@ CuOOraTest >> testObtenerRespuestasDeLaPregunta [
 
 { #category : #tests }
 CuOOraTest >> testPreguntasDelUsuario [
-
+	"se verifica la correcta obtención de una colección cuyo contenido son todas las preguntas realizadas por un usuario determinado."
 	|preguntas|
 	
 	preguntas := sistema preguntasDelUsuario: user1.
@@ -221,6 +231,7 @@ CuOOraTest >> testPreguntasDelUsuario [
 
 { #category : #tests }
 CuOOraTest >> testRespuestasDelUsuario [
+	"Se verifica la correcta obtención de una colección cuyo contenid son todas las respuestas realizadas por un usuario determinado."
 
 	|respuestas|
 	

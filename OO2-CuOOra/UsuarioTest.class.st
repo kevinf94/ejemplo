@@ -14,6 +14,7 @@ Class {
 
 { #category : #internal }
 UsuarioTest >> crearPreguntaNoRelevante [
+	"Retorna una pregunta que no es relevante para el usuario."
 	^ Pregunta
 		conTopicos:
 			{topico2.
@@ -25,6 +26,8 @@ UsuarioTest >> crearPreguntaNoRelevante [
 
 { #category : #internal }
 UsuarioTest >> crearPreguntaRelevante1 [
+	"Retorna una pregunta que es relevante para un usuario determinado, porque ésta fue creada por otro usuario que
+	se encuentra en la colección de 'usuarios seguidos' del primer usuario mencionado."
 	^ Pregunta
 		conTopicos:
 			{topico2.
@@ -36,6 +39,8 @@ UsuarioTest >> crearPreguntaRelevante1 [
 
 { #category : #internal }
 UsuarioTest >> crearPreguntaRelevante2 [
+	"Retorna una pregunta que es de relevancia para un usuario determinado porque ésta poseé un tópico que es de
+	interés para dicho usuario."
 	^ Pregunta
 		conTopicos:
 			{topico1.
@@ -47,6 +52,9 @@ UsuarioTest >> crearPreguntaRelevante2 [
 
 { #category : #internal }
 UsuarioTest >> crearPreguntaRelevante3 [
+	"Retorna una pregunta que es relevante para un usuario determinado porque ésta fue creada con un tópico que es de
+	interés para dicho usuario, y porque la pregunta fue creadad por otro usuario, el cual es seguido por el primer
+	usuario mencionado."
 	^ Pregunta
 		conTopicos:
 			{topico1.
@@ -77,19 +85,28 @@ UsuarioTest >> setUp [
 
 { #category : #tests }
 UsuarioTest >> testAgregarTopicoDeInteres [
+	"se verifica la correcta adición de tópicos de interés para el usuario."
+	
 	self assert: user1 cantidadDetopicosDeInteres equals: 0.
 	user1 agregarTopicoDeInteres: topico1.
 	user1 agregarTopicoDeInteres: topico2.
-	self assert: user1 cantidadDetopicosDeInteres equals: 2
-	"mejor hacer includes"
+	self assert: user1 cantidadDetopicosDeInteres equals: 2.
+
+	self assert: (user1 esTopicoDeInteres: topico1).
+	self assert: (user1 esTopicoDeInteres: topico2).
+	self deny: (user1 esTopicoDeInteres: topico3).
 ]
 
 { #category : #tests }
 UsuarioTest >> testAgregarUsuarioParaSeguir [
-self assert: user1 cantidadDeUsuariosSeguidos equals: 0.
+	self assert: user1 cantidadDeUsuariosSeguidos equals: 0.
 	user1 agregarUsuarioParaSeguir: user2.
 	user1 agregarUsuarioParaSeguir: user3.
-	self assert: user1 cantidadDeUsuariosSeguidos equals: 2
+	self assert: user1 cantidadDeUsuariosSeguidos equals: 2.
+	
+	self deny: (user1 esUsuarioSeguido: user1).
+	self assert: (user1 esUsuarioSeguido: user2).
+	self assert: (user1 esUsuarioSeguido: user3).
 ]
 
 { #category : #tests }

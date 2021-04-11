@@ -25,7 +25,7 @@ PostTest >> setUp [
 
 { #category : #tests }
 PostTest >> testAgregarDislikeDelUsuario [
-	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+	"Se testea la correcta adición de 'dislike' solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
 
 	|voto|
 	self assert: pregunta cantidadDeDislikes equals: 0.
@@ -41,7 +41,7 @@ PostTest >> testAgregarDislikeDelUsuario [
 
 { #category : #tests }
 PostTest >> testAgregarLikeDelUsuario [
-	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+	"Se testea la correcta adición de 'like' solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
 
 	|voto|
 	self assert: pregunta cantidadDeLikes equals: 0.
@@ -57,14 +57,15 @@ PostTest >> testAgregarLikeDelUsuario [
 
 { #category : #tests }
 PostTest >> testEsDelUsuario [
-	"Se testea Dislike solo con preguntas y no respuestas, ya que ambas heredan el atributo."
+	"Se verifica el correcto funcionamiento del método con preguntas y no con respuestas, ya que ambas heredan el comportamiento."
 	self assert: (pregunta esDelUsuario: usuario1).
 	self deny: (pregunta esDelUsuario: usuario2).
 ]
 
 { #category : #tests }
 PostTest >> testPuntaje [
-	"Se testea Puntaje solo con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+	"Se testea el correcto funcionamiento del método 'Puntaje' solo con preguntas y no
+	respuestas, ya que ambas heredan el comportamiento."
 	
 	self assert: pregunta puntaje equals: 0.
 	pregunta agregarLikeDelUsuario: usuario1.
@@ -78,6 +79,7 @@ PostTest >> testPuntaje [
 
 { #category : #tests }
 PostTest >> testQuitarDislikeDelUsuario [
+	"Se virifica el correcto funcionamiento del método con preguntas y no respuestas, ya que ambas heredan el comportamiento."
 
 	self deny: (pregunta tieneDislikeDelUsuario: usuario1).
 	pregunta agregarDislikeDelUsuario: usuario1.
@@ -89,7 +91,8 @@ PostTest >> testQuitarDislikeDelUsuario [
 
 { #category : #tests }
 PostTest >> testQuitarLikeDelUsuario [
-
+	"Se virifica el correcto funcionamiento del método con preguntas y no respuestas, ya que ambas heredan el comportamiento."
+	
 	self deny: (pregunta tieneLikeDelUsuario: usuario1).
 	pregunta agregarLikeDelUsuario: usuario1.
 	self assert: (pregunta tieneLikeDelUsuario: usuario1).

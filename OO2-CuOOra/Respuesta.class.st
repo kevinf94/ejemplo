@@ -17,11 +17,13 @@ Respuesta class >> conTexto: unTexto usuario: unUsuario [
 
 { #category : #creating }
 Respuesta >> conTexto: unTexto usuario: unUsuario [
+	"Constructor."
 	texto := unTexto.
 	usuario := unUsuario.
 ]
 
 { #category : #'methods for tests' }
 Respuesta >> texto [
+	"Retorna el texto de la respuesta."
 	^texto
 ]

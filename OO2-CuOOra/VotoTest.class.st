@@ -17,6 +17,7 @@ VotoTest >> setUp [
 
 { #category : #tests }
 VotoTest >> testCambiar [
+	"Se verifica el correcto funcionamiento del método: cambiar"
 
 	self assert: voto esLike.
 	voto cambiar.
@@ -26,6 +27,9 @@ VotoTest >> testCambiar [
 
 { #category : #tests }
 VotoTest >> testEsDelUsuario [
+
+	"Se verifica el correcto funcionamiento del método: esDelUsuario"
+	
 	|otroUsuario|
 	otroUsuario := Usuario conNombre: 'otro' contrasena: '123'.
 	
@@ -36,6 +40,8 @@ VotoTest >> testEsDelUsuario [
 { #category : #tests }
 VotoTest >> testEsDislike [
 
+	"Se verifica el correcto funcionamiento del método: esDislike."
+
 	voto cambiar.
 	self assert: voto esDislike.
 
@@ -44,6 +50,7 @@ VotoTest >> testEsDislike [
 { #category : #tests }
 VotoTest >> testEsLike [
 
+	"Se verifica el correcto funcionamiento del método: esLike."
 	self assert: voto esLike.
 	
 ]

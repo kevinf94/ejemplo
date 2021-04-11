@@ -17,6 +17,9 @@ topico2 := (Topico conNombre: 'Peliculas' descripcion: 'acerca de peliculas').
 
 { #category : #tests }
 TopicoTest >> testEsElTopico [
+
+	"Se verifica el correcto funcionamiento del método."
+	
 	self assert: (topico1 esElTopico: topico1).
 	self deny: (topico1 esElTopico: topico2)
 ]

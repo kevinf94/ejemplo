@@ -36,7 +36,11 @@ PreguntaTest >> setUp [
 
 { #category : #tests }
 PreguntaTest >> testCrearRespuestaConTextoUsuario [
+	
+	"Se verifica la correcta creación de una respuesta."
+	
 	|usuario respuesta|
+	
 	usuario := Usuario conNombre: 'otro' contrasena: '123'.
 	respuesta := pregunta1 crearRespuestaConTexto: 'una respuesta' usuario: usuario.
 	self assert: (pregunta1 tenesLaRespuesta: respuesta).
@@ -45,12 +49,18 @@ PreguntaTest >> testCrearRespuestaConTextoUsuario [
 
 { #category : #tests }
 PreguntaTest >> testEsTuUsuario [
+	"Se verifica el correcto funcionamiento del método."
+	
 	self assert: (pregunta1 esTuUsuario: usuario1).
 	self deny: (pregunta1 esTuUsuario: usuario2)
 ]
 
 { #category : #tests }
 PreguntaTest >> testObtenerRespuestasDelUsuario [
+	
+	"Se verifica el correcto funcionamiento de la obtención de una coleccion con las respuestas realizadas por un
+	usuario determinado que corresponden a la pregunta."
+	
 	|respuestas|
 	respuestas := pregunta1 obtenerRespuestasDelUsuario: (Usuario conNombre: 'Test' contrasena: 'testeando').
 	self assert: respuestas isEmpty.
@@ -64,6 +74,9 @@ PreguntaTest >> testObtenerRespuestasDelUsuario [
 
 { #category : #tests }
 PreguntaTest >> testTieneElTopico [
+
+	"Se verifica el correcto funcionamiento del método."
+
 	|topico|
 	topico := Topico conNombre: 'Test' descripcion: 'testeando'.
 	self assert: (pregunta1 tieneElTopico: topico1).
