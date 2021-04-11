@@ -25,11 +25,11 @@ CuOOraRegisterComponent >> initialize [
 { #category : #rendering }
 CuOOraRegisterComponent >> registerAndLogin [
 	(self usuarioYContrasenaOK)
-	    ifTrue: [
-	(self model existeUsuarioConNombre: nombre)
+	ifTrue: [
+		(self model existeUsuarioConNombre: nombre)
 		ifTrue: [ usuarioExistente := nombre ]
 		ifFalse: [ self agregarUsuarioACuoora . self login ]
-].
+	].
 
 	nombre := nil.
 	contrasena := nil
@@ -39,7 +39,9 @@ CuOOraRegisterComponent >> registerAndLogin [
 CuOOraRegisterComponent >> renderButtonsOn: aCanvas [
 	aCanvas submitButton
 		callback: [ self registerAndLogin ];
-		with: 'Registrar e Ingresar'
+		with: 'Registrar e Ingresar'.
+	aCanvas space: 3.
+	aCanvas submitButton callback: [ self answer. ]; with: 'Volver'.
 ]
 
 { #category : #rendering }
