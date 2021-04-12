@@ -15,12 +15,6 @@ CuOOraRegisterComponent >> agregarUsuarioACuoora [
 	self model crearUnNuevoUsuarioConNombre: nombre contrasena: contrasena .
 ]
 
-{ #category : #initialization }
-CuOOraRegisterComponent >> initialize [
-	super initialize.
-
-]
-
 { #category : #rendering }
 CuOOraRegisterComponent >> registerAndLogin [
 	(self usuarioYContrasenaOK)
