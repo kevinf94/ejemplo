@@ -5,7 +5,6 @@ Class {
 	#name : #CuOOraRegisterComponent,
 	#superclass : #CuOOraAccessingComponent,
 	#instVars : [
-		'existeUsuario',
 		'usuarioExistente'
 	],
 	#category : #'OO2-CuOOra-InterfazWeb'
@@ -19,7 +18,7 @@ CuOOraRegisterComponent >> agregarUsuarioACuoora [
 { #category : #initialization }
 CuOOraRegisterComponent >> initialize [
 	super initialize.
-	existeUsuario := false.
+
 ]
 
 { #category : #rendering }
