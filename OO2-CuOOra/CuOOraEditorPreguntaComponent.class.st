@@ -43,6 +43,7 @@ CuOOraEditorPreguntaComponent >> clearVariables [
 
 { #category : #'instance creation' }
 CuOOraEditorPreguntaComponent >> conPregunta: unaPregunta [
+	pregunta := unaPregunta.
 	nuevoTitulo := unaPregunta titulo.
 	nuevaDescripcion := unaPregunta descripcion.
 	nuevosTopicos := unaPregunta topicos.
@@ -61,7 +62,8 @@ CuOOraEditorPreguntaComponent >> descripcion: unaDescripcion [
 { #category : #initializing }
 CuOOraEditorPreguntaComponent >> initialize [
 	super initialize.
-	topicosDelSistema := self topicosDelSistemaOrdenados.
+	topicosDelSistema := OrderedCollection new.
+	topicosDelSistema addAll: self topicosDelSistemaOrdenados.
 	nuevosTopicos := OrderedCollection new.
 ]
 
@@ -81,7 +83,14 @@ CuOOraEditorPreguntaComponent >> publicarPregunta [
 	((nuevosTopicos size < 1) or: [ (nuevoTitulo isNil) or: [ (nuevoTitulo isEmpty) or: [ (nuevaDescripcion isNil) or: [ (nuevaDescripcion isEmpty ) ] ] ] ] )
 	ifTrue: [ "self clearVariables." ^self ].
 	
-	self model agregarPreguntaConTopicos: nuevosTopicos titulo: nuevoTitulo descripcion: nuevaDescripcion usuario: (self session usuario).
+	(pregunta)
+	ifNil: [ 
+		self model agregarPreguntaConTopicos: nuevosTopicos titulo: nuevoTitulo descripcion: nuevaDescripcion usuario: (self session usuario).
+	]
+	ifNotNil:[ 
+		self model borrarLaPregunta: pregunta.
+		self model agregarPreguntaConTopicos: nuevosTopicos titulo: nuevoTitulo descripcion: nuevaDescripcion usuario: (self session usuario).
+	].
 	self clearVariables.
 	self answer.
 ]
@@ -90,6 +99,7 @@ CuOOraEditorPreguntaComponent >> publicarPregunta [
 CuOOraEditorPreguntaComponent >> quitarElTopico: unTopico [
 	nuevosTopicos remove: unTopico.
 	topicosDelSistema add: unTopico.
+	topicosDelSistema := topicosDelSistema asSortedCollection: [ :a :b | a nombre < b nombre ].
 ]
 
 { #category : #rendering }
@@ -133,7 +143,7 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaBotones: aCanvas [
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaDescripcionOn: aCanvas [
 	aCanvas paragraph: [ 
-		aCanvas label: [ aCanvas strong: 'Descripci√≥n:'. ].
+		aCanvas label: [ aCanvas strong: 'Descripción:'. ].
 		aCanvas paragraph.
 		aCanvas textArea on: #descripcion of: self; columns: 40; rows: 4.
 	].
@@ -142,7 +152,7 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaDescripcionOn: aCanvas [
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaTituloOn: aCanvas [
 	aCanvas paragraph: [
-		aCanvas label: [ aCanvas strong: 'T√≠tulo:' ].
+		aCanvas label: [ aCanvas strong: 'Título:' ].
 		aCanvas space.
 		aCanvas textInput on: #titulo of: self.
 	].
@@ -152,12 +162,12 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaTituloOn: aCanvas [
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaVerQuitarTopicosOn: aCanvas [
 	(nuevosTopicos)
 	ifEmpty: [ 
-		aCanvas paragraph: [ aCanvas text: 'Debe seleccionar al menos un t√≥pico, y puede agregar varios.' ].
+		aCanvas paragraph: [ aCanvas text: 'Debe seleccionar al menos un tópico, y puede agregar varios.' ].
 		^self.
 	].
 	
 	aCanvas paragraph: [ 
-		aCanvas label: [ aCanvas strong: 'Quitar el t√≥pico: '. ].
+		aCanvas label: [ aCanvas strong: 'Quitar el tópico: '. ].
 		nuevosTopicos do: [ :unTopico | 
 			aCanvas anchor callback: [ self quitarElTopico: unTopico; yourself. ]; with: unTopico nombre. aCanvas space.
 		].
@@ -194,5 +204,6 @@ CuOOraEditorPreguntaComponent >> topicos: unosTopicos [
 
 { #category : #private }
 CuOOraEditorPreguntaComponent >> topicosDelSistemaOrdenados [
-	^self model topicos asSortedCollection: [ :a :b | a nombre < b nombre ]
+	^self model topicos asSortedCollection: [ :a :b | a nombre < b nombre ].
+
 ]

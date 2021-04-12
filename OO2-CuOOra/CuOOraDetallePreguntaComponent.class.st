@@ -83,6 +83,13 @@ CuOOraDetallePreguntaComponent >> renderRespuestasOn: aCanvas [
 				self renderRespuestaInfo: unaRespuesta on: aCanvas.
 				self renderRespuestaTexto: unaRespuesta on: aCanvas.
 				self renderPost: unaRespuesta votosOn: aCanvas.
+				aCanvas form: [ 
+					(unaRespuesta usuario = self session usuario) ifTrue: [ 
+						self renderEditarRespuesta: unaRespuesta deLaPregunta: pregunta on: aCanvas.
+						aCanvas space: 2.
+						self renderBorrarPost: unaRespuesta on: aCanvas.
+					].
+				].
 			].
 		].
 	].

@@ -40,9 +40,8 @@ CuOOrLayoutComponent >> model [
 
 { #category : #rendering }
 CuOOrLayoutComponent >> renderBorrarPost: unPost on: aCanvas [
-	aCanvas form: [ 
-		aCanvas submitButton callback: [ self borrarPregunta: unPost. ]; value: ' Eliminar pregunta '.
-	].
+	aCanvas submitButton callback: [ self borrarPregunta: unPost. ]; value: ' Eliminar '.
+
 ]
 
 { #category : #rendering }
@@ -54,6 +53,30 @@ CuOOrLayoutComponent >> renderContentOn: aCanvas [
 { #category : #rendering }
 CuOOrLayoutComponent >> renderCuerpoOn: aCanvas [
 	self subclassResponsibility
+]
+
+{ #category : #rendering }
+CuOOrLayoutComponent >> renderEditarPregunta: unaPregunta on: aCanvas [
+	aCanvas submitButton
+		callback: [ self call: (CuOOraEditorPreguntaComponent conPregunta: unaPregunta); yourself. ];
+		value: ' Modificar pregunta '.
+
+]
+
+{ #category : #rendering }
+CuOOrLayoutComponent >> renderEditarRespuesta: unaRespuesta deLaPregunta: unaPregunta on: aCanvas [
+	aCanvas submitButton
+		callback: [ self call: (CuOOraEditorRespuestaComponent conPregunta: unaPregunta yRespuesta: unaRespuesta); yourself. ];
+		value: ' Modificar respuesta '.
+
+]
+
+{ #category : #rendering }
+CuOOrLayoutComponent >> renderEditarRespuesta: unaRespuesta on: aCanvas [
+	aCanvas submitButton
+		callback: [ self call: (CuOOraEditorRespuestaComponent conPregunta: unaRespuesta); yourself. ];
+		value: ' Modificar respuesta '.
+
 ]
 
 { #category : #rendering }
@@ -80,8 +103,8 @@ CuOOrLayoutComponent >> renderPost: unPost votosOn: aCanvas [
 			aCanvas submitButton callback: [ self buttonLike: unPost. ]; with: (self textoBotonLikeParaElPost: unPost).
 			aCanvas text: ' | '; text: unPost cantidadDeDislikes; text: ' dislikes. | '.
 			aCanvas submitButton callback: [ self buttonDislike: unPost. ]; with: (self textoBotonDislikeParaElPost: unPost).
-		]
-	]
+		].
+	].
 ]
 
 { #category : #rendering }

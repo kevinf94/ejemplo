@@ -73,6 +73,16 @@ Post >> esDelUsuario: unUsuario [
 	^usuario = unUsuario
 ]
 
+{ #category : #'methods for tests' }
+Post >> fechaHoraCreacion [
+	^fechaHoraCreacion
+]
+
+{ #category : #'methods for tests' }
+Post >> fechaHoraCreacion: aDateAndTime [
+	fechaHoraCreacion := aDateAndTime.
+]
+
 { #category : #initializing }
 Post >> initialize [
 	fechaHoraCreacion := DateAndTime now.

@@ -55,8 +55,9 @@ CuOOraEditorRespuestaComponent >> publicarRespuesta [
 	((texto isNil) or: [ texto isEmpty ])
 	ifTrue: [ "self clearVariables." ^self ].
 	
-	"self model agregarRespuestaParaLaPregunta: pregunta texto: nuevoTexto usuario: self session usuario."
-	pregunta crearRespuestaConTexto: texto usuario: self session usuario.
+	(respuesta)
+	ifNil: [ 	pregunta crearRespuestaConTexto: texto usuario: self session usuario. ]
+	ifNotNil: [ pregunta borrarRespuesta: respuesta. pregunta crearRespuestaConTexto: texto usuario: self session usuario. ].
 	self clearVariables.
 	self answer.
 ]

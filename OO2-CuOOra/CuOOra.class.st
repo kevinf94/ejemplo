@@ -162,14 +162,18 @@ CuOOra >> mySetUp2 [
 	topic2 := self agregarTopicoConNombre: 'Test de unidad' descripcion: ''.
 	topic3 := self agregarTopicoConNombre: 'Smalltalk' descripcion: ''.
 	
-	ask1 := '¿Para qué sirve el m√©todo SetUp?'.
+	ask1 := '¿Para qué sirve el método SetUp?'.
 	ask1 := self agregarPreguntaConTopicos: {topic1. topic2.} titulo: ask1 descripcion: '' usuario: user1.
+	ask1 fechaHoraCreacion: '2021-04-12 17:10' asDateAndTime.
 	ask2 := '¿Qué significa #messageNotUnderstood?'.
 	ask2 := self agregarPreguntaConTopicos: {topic1. topic3.} titulo: ask2 descripcion: '' usuario: user2.
+	ask1 fechaHoraCreacion: '2021-04-11 09:45' asDateAndTime.
 
 	ans1 := 'Sirve para instanciar los objetos que son evaluados por el test en un único método y que se ejecute siempre antes de cada test'.
 	ans1 := self agregarRespuestaParaLaPregunta: ask1 texto: ans1 usuario: user2.
+	ans1 fechaHoraCreacion: '2021-04-12 20:00' asDateAndTime.
 	ans2 := 'Significa que el objeto que recibió el mensaje no encontró ningún método para ejecutar en respuesta'.
+	ans2 fechaHoraCreacion: '2021-04-12 13:00:11' asDateAndTime.
 	ans2 := self agregarRespuestaParaLaPregunta: ask2 texto: ans2 usuario: user1.
 
 ]

@@ -138,7 +138,15 @@ CuOOraPerfilComponent >> renderPerfilPreguntasOn: aCanvas [
 				self renderPregunta: unaPregunta topicosOn: aCanvas.
 				self renderPregunta: unaPregunta noLinkInfoOn: aCanvas. "self renderPregunta: unaPregunta infoOn: aCanvas."
 				self renderPost: unaPregunta votosOn: aCanvas.
-				(unaPregunta usuario = self session usuario) ifTrue: [ self renderBorrarPost: unaPregunta on: aCanvas. ].
+				aCanvas form: [ 
+					"codigo repetido en los components: hacer herencia <------------------------------------"
+					(unaPregunta usuario = self session usuario) ifTrue: [ 
+						self renderEditarPregunta: unaPregunta on: aCanvas.
+						aCanvas space: 2.
+						self renderBorrarPost: unaPregunta on: aCanvas.
+					].
+				].
+				
 			].
 			(preguntas last = unaPregunta) ifFalse: [ aCanvas horizontalRule. ].
 		].
