@@ -125,6 +125,11 @@ Usuario >> topicos [
 	^ topicos
 ]
 
+{ #category : #'methods for tests' }
+Usuario >> topicos: unosTopicos [
+	topicos := unosTopicos
+]
+
 { #category : #accessing }
 Usuario >> tuContrasenaEs: unaContrasena [
 	"Retorna verdadero/falso si la contraseña indicada es la del usuario."

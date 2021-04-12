@@ -41,7 +41,7 @@ CuOOrLayoutComponent >> model [
 { #category : #rendering }
 CuOOrLayoutComponent >> renderBorrarPost: unPost on: aCanvas [
 	aCanvas form: [ 
-		aCanvas submitButton callback: [ self borrarPregunta: unPost. ]; value: ' X '.
+		aCanvas submitButton callback: [ self borrarPregunta: unPost. ]; value: ' Eliminar pregunta '.
 	].
 ]
 
@@ -116,7 +116,7 @@ CuOOrLayoutComponent >> renderPregunta: unaPregunta tituloOn: aCanvas [
 { #category : #rendering }
 CuOOrLayoutComponent >> renderPregunta: unaPregunta topicosOn: aCanvas [
 	aCanvas paragraph: [
-		aCanvas text: 'T√≥picos: '; emphasis: [ 
+		aCanvas text: 'Tópicos: '; emphasis: [ 
 			unaPregunta topicos do: [ :unTopico | 
 				aCanvas text: (unTopico nombre).
 				(unaPregunta topicos last = unTopico) ifTrue: [ aCanvas text: '.' ] ifFalse: [ aCanvas text: ', '. ].

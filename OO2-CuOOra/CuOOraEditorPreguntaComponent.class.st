@@ -111,11 +111,11 @@ CuOOraEditorPreguntaComponent >> renderContentOn: aCanvas [
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaAgregarTopicosOn: aCanvas [
 	aCanvas paragraph: [ 
-		aCanvas label: [ aCanvas strong: 'Agregar el t√≥pico: ' ].
+		aCanvas label: [ aCanvas strong: 'Agregar el tópico: ' ].
 		aCanvas select
 			list: (topicosDelSistema);
 			beOptional;
-			optionalLabel: '-Seleccione un t√≥pico-';
+			optionalLabel: '-Seleccione un tópico-';
 			callback: [ :topicoSeleccionado | self agregarTopico: topicoSeleccionado; yourself. ].
 		aCanvas submitButton callback: [  ]; value: ' + '.
 	].

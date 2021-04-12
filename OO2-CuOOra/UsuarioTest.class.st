@@ -99,6 +99,9 @@ UsuarioTest >> testAgregarTopicoDeInteres [
 
 { #category : #tests }
 UsuarioTest >> testAgregarUsuarioParaSeguir [
+
+	"Se verifica la correcta adición de usuarios para seguir, para un determinado usuario."
+
 	self assert: user1 cantidadDeUsuariosSeguidos equals: 0.
 	user1 agregarUsuarioParaSeguir: user2.
 	user1 agregarUsuarioParaSeguir: user3.
@@ -111,17 +114,19 @@ UsuarioTest >> testAgregarUsuarioParaSeguir [
 
 { #category : #tests }
 UsuarioTest >> testEsRelevante [
-	| preguntaNoRelevante preguntaRelevantePorSeguidor preguntaRelevantePorTopico preguntaRelevantePorTopicoYSegudor |
+	"Se verficia el correcto funcionamiento para detectar preguntas relevantes para un usuario determinado."
+
+	| preguntaNoRelevante preguntaRelevantePorSeguidor preguntaRelevantePorTopico preguntaRelevantePorTopicoYSeguidor |
 	user1 agregarTopicoDeInteres: topico1.
 	user1 agregarUsuarioParaSeguir: user2.
 	preguntaRelevantePorSeguidor := self crearPreguntaRelevante1.
 	preguntaRelevantePorTopico := self crearPreguntaRelevante2.
-	preguntaRelevantePorTopicoYSegudor := self crearPreguntaRelevante3.
+	preguntaRelevantePorTopicoYSeguidor := self crearPreguntaRelevante3.
 	preguntaNoRelevante := self crearPreguntaNoRelevante.
 	
 	
 	self assert: (user1 esRelevante: preguntaRelevantePorSeguidor).
 	self assert: (user1 esRelevante: preguntaRelevantePorTopico).
-	self assert: (user1 esRelevante: preguntaRelevantePorTopicoYSegudor).
+	self assert: (user1 esRelevante: preguntaRelevantePorTopicoYSeguidor).
 	self deny: (user1 esRelevante: preguntaNoRelevante)
 ]
