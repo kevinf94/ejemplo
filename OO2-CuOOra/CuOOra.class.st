@@ -195,7 +195,7 @@ CuOOra >> obtenerPreguntasRelevantesParaElUsuario: unUsuario [
 { #category : #accessing }
 CuOOra >> obtenerPuntajeDelUsuario: unUsuario [
 	"acoplamiento?????"
-	"Midiante las preguntas, respuestas, y los votos que recibió, se calcula el puntaje de un usuario."
+	"Se indica un usuario y mediante las preguntas, respuestas, y los votos que recibieron su publicación, se calcula su puntaje."
 	|lasPreguntas puntajePreguntas lasRespuestas puntajeRespuestas|
 	lasPreguntas := self preguntasDelUsuario: unUsuario.
 	lasRespuestas := self respuestasAOtrosUsuariosDelUsuario: unUsuario.

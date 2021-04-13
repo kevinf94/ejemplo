@@ -7,9 +7,11 @@ Class {
 	#instVars : [
 		'nombre',
 		'contrasena',
+		'fechaHoraCreacion',
 		'usuariosSeguidos',
 		'topicos',
-		'fechaHoraCreacion'
+		'preguntas',
+		'respuestas'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }

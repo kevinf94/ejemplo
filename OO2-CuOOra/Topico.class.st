@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'nombre',
-		'descripcion'
+		'descripcion',
+		'preguntas'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
@@ -43,7 +44,8 @@ Topico >> nombre [
 
 { #category : #accessing }
 Topico >> printOn: aStream [
-	"Similar al 'toString()' de java. Al ver el contenido de una colección de objetos de
-	tipo tópicos, se reemplaza el texto 'a Topic' por el 'nombre' del tópico."
+	"Similar al 'toString()' de java. Al ver el contenido de una colección
+	de objetos de tipo tópicos, se reemplaza el texto 'a Topic' por
+	el 'nombre' del tópico."
 	aStream nextPutAll: nombre
 ]
