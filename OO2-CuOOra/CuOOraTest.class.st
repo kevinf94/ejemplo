@@ -69,33 +69,6 @@ CuOOraTest >> setUp [
 ]
 
 { #category : #tests }
-CuOOraTest >> testAgregarPreguntaConTopicosTituloDescripcionUsuario [
-	"Se verifica la correcta creación de una pregunta."
-
-	|ask|
-	
-	ask := sistema agregarPreguntaConTopicos: { topic1. } titulo: 'Test' descripcion: 'testing...' usuario: user1.
-	
-	self assert: (sistema tenesLaPregunta: ask).
-	self assert: ask titulo equals: 'Test'.
-	self assert: ask descripcion equals: 'testing...'.
-	self assert: ask usuario equals: user1.
-]
-
-{ #category : #tests }
-CuOOraTest >> testAgregarRespuestaParaLaPreguntaTextoUsuario [
-	"Se veriifca la correcta creación de una respuesta."
-
-	|ans|
-	
-	ans := sistema agregarRespuestaParaLaPregunta: ask1 texto: 'Test' usuario: user3.
-	
-	self assert: (ask1 tenesLaRespuesta: ans).
-	self assert: ans texto equals: 'Test'.
-	self assert: ans usuario equals: user3.
-]
-
-{ #category : #tests }
 CuOOraTest >> testAgregarTopicoConNombreDescripcion [
 	"Se verifica la correcta creación de un tópico."
 
@@ -106,33 +79,6 @@ CuOOraTest >> testAgregarTopicoConNombreDescripcion [
 	self assert: (sistema tenesElTopico: topic).
 	self assert: topic nombre equals: 'Test'.
 	self assert: topic descripcion equals: 'Desc'.
-]
-
-{ #category : #tests }
-CuOOraTest >> testAgregarTopicoDeInteresParaElUsuario [
-	"Se verifica la correcta adición de un tópico."
-
-	|topicos|	
-	sistema agregarTopicoDeInteres: topic1 paraElUsuario: user1.
-	topicos := user1 topicos.
-	
-	self assert: (topicos includes: topic1).
-
-	
-]
-
-{ #category : #tests }
-CuOOraTest >> testBorrarLaPregunta [
-	"Se verifica la correcta eliminación de una pregunta."
-
-	|preguntas borrada|
-	
-	preguntas := sistema preguntas.
-	borrada := sistema borrarLaPregunta: ask1.
-	
-	self deny: (preguntas includes: ask1).
-	self deny: (preguntas includes: borrada).
-	self assert: borrada equals: ask1.
 ]
 
 { #category : #tests }
@@ -166,24 +112,6 @@ CuOOraTest >> testObtenerLasPreguntasConElTopico [
 	preguntas := sistema obtenerLasPreguntasConElTopico: topic3.
 	self assert: preguntas size equals: 1.
 	self assert: (preguntas allSatisfy: [ :p | p tieneElTopico: topic3. ]).
-]
-
-{ #category : #tests }
-CuOOraTest >> testObtenerPreguntasRelevantesParaElUsuario [
-	"Se verifica la correcta obtención de una colección de preguntas que son relevantes para un usuario determinado."
-
-	|preguntas|
-	
-	preguntas := sistema obtenerPreguntasRelevantesParaElUsuario: user1.
-	self assert: (preguntas includes: ask1).
-	self assert: (preguntas includes: ask2).
-	self assert: (preguntas includes: ask3).
-	
-	preguntas := sistema obtenerPreguntasRelevantesParaElUsuario: user2.
-	self assert: (preguntas includes: ask1).
-	self deny: (preguntas includes: ask2).
-	self assert: (preguntas includes: ask3).
-
 ]
 
 { #category : #tests }

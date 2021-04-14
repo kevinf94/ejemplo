@@ -76,7 +76,7 @@ Post >> fechaYHoraDeCreacion [
 { #category : #initializing }
 Post >> initialize [
 	fechaHoraCreacion := DateAndTime now.
-	votos := OrderedCollection new.
+	votos := Set new.
 ]
 
 { #category : #internal }

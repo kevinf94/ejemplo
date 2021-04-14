@@ -15,6 +15,11 @@ Respuesta class >> conTexto: unTexto usuario: unUsuario [
 	^self new conTexto: unTexto usuario: unUsuario
 ]
 
+{ #category : #accessing }
+Respuesta >> borrate [
+	usuario borrarRespuesta: self.
+]
+
 { #category : #creating }
 Respuesta >> conTexto: unTexto usuario: unUsuario [
 	"Constructor."

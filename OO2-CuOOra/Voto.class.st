@@ -57,6 +57,11 @@ Voto >> esLike [
 	^tipo = 'like'
 ]
 
+{ #category : #'methods for tests' }
+Voto >> fechaYHoraDeCreacion [
+	^fechaHoraCreacion
+]
+
 { #category : #initializing }
 Voto >> initialize [
 	fechaHoraCreacion := DateAndTime now.

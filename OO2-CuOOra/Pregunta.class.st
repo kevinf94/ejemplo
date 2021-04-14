@@ -20,10 +20,11 @@ Pregunta class >> conTopicos: unosTopicos titulo: unTitulo descripcion: unaDescr
 	self error: 'Falta al menos un t√≥pico.'.
 ]
 
-{ #category : #'methods for tests' }
-Pregunta >> borrarRespuesta: unaRespuesta [
-	"Elimina una respuesta de la colección de respuesta y la retona. Si no existía, retorna el valor nil."
-	^respuestas remove: unaRespuesta ifAbsent: [ ^nil. ].
+{ #category : #accessing }
+Pregunta >> borrate [
+	respuestas do: [ :unaRespuesta | unaRespuesta borrate ].
+	topicos do: [ :unTopico | unTopico borrarLaPregunta: self ].
+	usuario borrarLaPregunta: self.
 ]
 
 { #category : #accessing }
@@ -65,8 +66,8 @@ Pregunta >> esTuUsuario: unUsuario [
 { #category : #initializing }
 Pregunta >> initialize [
 	super initialize.
-	respuestas := OrderedCollection new.
-	topicos := OrderedCollection new.
+	respuestas := Set new.
+	topicos := Set new.
 ]
 
 { #category : #accessing }

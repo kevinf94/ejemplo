@@ -22,6 +22,11 @@ Topico >> agregarPregunta: unaPregunta [
 	^preguntas add: unaPregunta 
 ]
 
+{ #category : #accessing }
+Topico >> borrarLaPregunta: unaPregunta [
+	^preguntas remove: unaPregunta ifAbsent: [ ^nil ].
+]
+
 { #category : #creating }
 Topico >> conNombre: unNombreString descripcion: unaDescripcionString [
 	"Constructor."
@@ -39,6 +44,11 @@ Topico >> descripcion [
 Topico >> esElTopico: unTopico [
 	"Retorna verdadero/falso si el tópico (self) es el tópico (parámetro) indicado."
 	^self = unTopico
+]
+
+{ #category : #initialization }
+Topico >> initialize [
+	preguntas := Set new.
 ]
 
 { #category : #'methods for tests' }

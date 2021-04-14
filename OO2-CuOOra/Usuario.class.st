@@ -43,6 +43,16 @@ Usuario >> agregarUsuarioParaSeguir: unUsuario [
 	^usuariosSeguidos add: unUsuario
 ]
 
+{ #category : #accessing }
+Usuario >> borrarLaPregunta: unaPregunta [
+	^preguntas remove: unaPregunta ifAbsent: [ ^nil ].
+]
+
+{ #category : #accessing }
+Usuario >> borrarLaRespuesta: unaRespuesta [
+	^respuestas remove: unaRespuesta ifAbsent: [ ^nil ].
+]
+
 { #category : #'methods for tests' }
 Usuario >> cantidadDeUsuariosSeguidos [
 	"Retorna la cantidad de usuarios seguidos del usuario."
@@ -95,8 +105,10 @@ Usuario >> fechaYHoraDeCreacion [
 { #category : #initializing }
 Usuario >> initialize [
 	fechaHoraCreacion := DateAndTime now.
-	usuariosSeguidos := OrderedCollection new.
-	topicos := OrderedCollection new.
+	usuariosSeguidos := Set new.
+	topicos := Set new.
+	preguntas := Set new.
+	respuestas := Set new.
 ]
 
 { #category : #'methods for tests' }

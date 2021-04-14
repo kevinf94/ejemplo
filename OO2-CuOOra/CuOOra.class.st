@@ -57,9 +57,8 @@ CuOOra >> existeUsuarioConNombre: unNombre [
 
 { #category : #initializing }
 CuOOra >> initialize [
-	usuarios := OrderedCollection new.
-	topicos := OrderedCollection new.
-	preguntas := OrderedCollection new.
+	usuarios := Set new.
+	topicos := Set new.
 	
 	self mySetUp.
 	self mySetUp2.
@@ -69,46 +68,43 @@ CuOOra >> initialize [
 { #category : #initializing }
 CuOOra >> mySetUp [
 	"set up para testing"
-	|unUsuario unaPregunta unosTopicos|
+	|user1 user2 user3 user4 ask1 ask2 ask3 ask4 ask5 topic1 topic2 topic3 topic4 topic5 topic6 topic7|
 	
-	1 to: 20 do: [ :x | usuarios add: (Usuario conNombre: ('user',x asString) contrasena: ('pass',x asString)) ].
+	topic1 := topicos add: (Topico conNombre: 'topic1' descripcion: 'desc1').
+	topic2 := topicos add: (Topico conNombre: 'topic2' descripcion: 'desc2').
+	topic3 := topicos add: (Topico conNombre: 'topic3' descripcion: 'desc3').
+	topic4 := topicos add: (Topico conNombre: 'topic4' descripcion: 'desc4').
+	topic5 := topicos add: (Topico conNombre: 'topic5' descripcion: 'desc5').
+	topic6 := topicos add: (Topico conNombre: 'topic6' descripcion: 'desc6').
+	topic7 := topicos add: (Topico conNombre: 'topic7' descripcion: 'desc7').
 	
-	1 to: 20 do: [ :y | topicos add: (Topico conNombre: ('topico',y asString) descripcion: ('descripcion del topico',y asString)) ].
+	user1 := usuarios add: (Usuario conNombre: 'user1' contrasena: 'pass1').
+	user2 := usuarios add: (Usuario conNombre: 'user2' contrasena: 'pass2').
+	user3 := usuarios add: (Usuario conNombre: 'user3' contrasena: 'pass3').
+	user4 := usuarios add: (Usuario conNombre: 'user4' contrasena: 'pass4').
 	
-	unUsuario := usuarios at: 1.
-	unUsuario agregarTopicoDeInteres: (topicos at: 3).
-	unUsuario agregarTopicoDeInteres: (topicos at: 5).
-	unUsuario agregarUsuarioParaSeguir: (usuarios at: 2).
-	1 to: 2 do: [ :a | 
-		unosTopicos := OrderedCollection with: (topicos at: a).
-		preguntas add: (Pregunta conTopicos: unosTopicos titulo: 'pregunta',a asString descripcion: 'descripcion pregunta',a asString usuario: unUsuario)
-		].
+	user1 agregarTopicoDeInteres: topic3.
+	user1 agregarTopicoDeInteres: topic5.
+	user1 agregarUsuarioParaSeguir: user2.
+	ask1 := Pregunta conTopicos: {topic1} titulo: 'pregunta1' descripcion: 'descripcion pregunta1' usuario: user1.
+	ask2 := Pregunta conTopicos: {topic2} titulo: 'pregunta1' descripcion: 'descripcion pregunta1' usuario: user1.
 	
-	unUsuario := usuarios at: 2.
-	unUsuario agregarTopicoDeInteres: (topicos at: 1).
-	unUsuario agregarTopicoDeInteres: (topicos at: 4).
-	unUsuario agregarUsuarioParaSeguir: (usuarios at: 1).
-	3 to: 4 do: [ :b | 
-		unosTopicos := OrderedCollection with: (topicos at: b).
-		self agregarPreguntaConTopicos: unosTopicos titulo: 'pregunta',b asString descripcion: 'descripcion pregunta',b asString usuario: unUsuario
-		].
+	user2 agregarTopicoDeInteres: topic1.
+	user2 agregarTopicoDeInteres: topic4.
+	user2 agregarUsuarioParaSeguir: user1.
+	ask3 := Pregunta conTopicos: {topic3} titulo: 'pregunta3' descripcion: 'descripcion pregunta3' usuario: user1.
+	ask4 := Pregunta conTopicos: {topic4} titulo: 'pregunta4' descripcion: 'descripcion pregunta4' usuario: user1.
 	
-	unUsuario := usuarios at: 3.
-	unUsuario agregarTopicoDeInteres: (topicos at: 6).
-	unUsuario agregarTopicoDeInteres: (topicos at: 7).
-	unUsuario agregarUsuarioParaSeguir: (usuarios at: 2).
-	5 to: 6 do: [ :b | 
-		unosTopicos := OrderedCollection with: (topicos at: b).
-		self agregarPreguntaConTopicos: unosTopicos titulo: 'pregunta',b asString descripcion: 'descripcion pregunta',b asString usuario: unUsuario
-		].
+	user3 agregarTopicoDeInteres: topic6.
+	user3 agregarTopicoDeInteres: topic7.
+	user3 agregarUsuarioParaSeguir: user2.
+	ask5 := Pregunta conTopicos: {topic5} titulo: 'pregunta5' descripcion: 'descripcion pregunta5' usuario: user1.
 
-	unaPregunta := preguntas at: 4.
-	unaPregunta agregarLikeDelUsuario: (usuarios at: 1).
-	unaPregunta agregarLikeDelUsuario: (usuarios at: 2).
-	self agregarRespuestaParaLaPregunta: unaPregunta texto: 'respuesta a la pregunta4'  usuario: (usuarios at: 7).
+	ask4 agregarLikeDelUsuario: user1.
+	ask4 agregarLikeDelUsuario: user2.
+	ask4 crearRespuestaConTexto: 'respuesta a la pregunta4'  usuario: user4.
 	
-	unaPregunta := preguntas at: 5.
-	unaPregunta agregarDislikeDelUsuario: (usuarios at: 1).
+	ask5 agregarDislikeDelUsuario: user1.
 
 
 ]
