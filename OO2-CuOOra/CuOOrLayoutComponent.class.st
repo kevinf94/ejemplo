@@ -33,11 +33,6 @@ CuOOrLayoutComponent >> logOut [
 	
 ]
 
-{ #category : #accessing }
-CuOOrLayoutComponent >> model [
-	^CuOOra soleInstance
-]
-
 { #category : #rendering }
 CuOOrLayoutComponent >> renderBorrarPost: unPost on: aCanvas [
 	aCanvas form: [ 
@@ -70,6 +65,13 @@ CuOOrLayoutComponent >> renderLinkAlPerfilDelUsuario: unUsuario On: aCanvas [
 	elUsuario := unUsuario.
 	elUsuario ifNil: [ elUsuario := self session usuario. ].
 	aCanvas anchor callback: [ self call: (CuOOraPerfilComponent conUsuario: elUsuario); yourself. ]; with: elUsuario nombre.
+]
+
+{ #category : #rendering }
+CuOOrLayoutComponent >> renderPost: unPost creadaOn: aCanvas [
+	aCanvas paragraph: [ 
+		aCanvas text: 'Creada: ', (unPost fechaYHoraDeCreacion) asString.
+	].
 ]
 
 { #category : #rendering }
@@ -116,7 +118,7 @@ CuOOrLayoutComponent >> renderPregunta: unaPregunta tituloOn: aCanvas [
 { #category : #rendering }
 CuOOrLayoutComponent >> renderPregunta: unaPregunta topicosOn: aCanvas [
 	aCanvas paragraph: [
-		aCanvas text: 'T√≥picos: '; emphasis: [ 
+		aCanvas text: 'Tópicos: '; emphasis: [ 
 			unaPregunta topicos do: [ :unTopico | 
 				aCanvas text: (unTopico nombre).
 				(unaPregunta topicos last = unTopico) ifTrue: [ aCanvas text: '.' ] ifFalse: [ aCanvas text: ', '. ].

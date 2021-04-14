@@ -81,7 +81,7 @@ CuOOraEditorPreguntaComponent >> publicarPregunta [
 	((nuevosTopicos size < 1) or: [ (nuevoTitulo isNil) or: [ (nuevoTitulo isEmpty) or: [ (nuevaDescripcion isNil) or: [ (nuevaDescripcion isEmpty ) ] ] ] ] )
 	ifTrue: [ "self clearVariables." ^self ].
 	
-	self model agregarPreguntaConTopicos: nuevosTopicos titulo: nuevoTitulo descripcion: nuevaDescripcion usuario: (self session usuario).
+	Pregunta conTopicos: nuevosTopicos titulo: nuevoTitulo descripcion: nuevaDescripcion usuario: (self session usuario).
 	self clearVariables.
 	self answer.
 ]
@@ -111,11 +111,11 @@ CuOOraEditorPreguntaComponent >> renderContentOn: aCanvas [
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaAgregarTopicosOn: aCanvas [
 	aCanvas paragraph: [ 
-		aCanvas label: [ aCanvas strong: 'Agregar el t√≥pico: ' ].
+		aCanvas label: [ aCanvas strong: 'Agregar el tópico: ' ].
 		aCanvas select
 			list: (topicosDelSistema);
 			beOptional;
-			optionalLabel: '-Seleccione un t√≥pico-';
+			optionalLabel: '-Seleccione un tópico-';
 			callback: [ :topicoSeleccionado | self agregarTopico: topicoSeleccionado; yourself. ].
 		aCanvas submitButton callback: [  ]; value: ' + '.
 	].
@@ -133,7 +133,7 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaBotones: aCanvas [
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaDescripcionOn: aCanvas [
 	aCanvas paragraph: [ 
-		aCanvas label: [ aCanvas strong: 'Descripci√≥n:'. ].
+		aCanvas label: [ aCanvas strong: 'Descripci.on:'. ].
 		aCanvas paragraph.
 		aCanvas textArea on: #descripcion of: self; columns: 40; rows: 4.
 	].
@@ -142,7 +142,7 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaDescripcionOn: aCanvas [
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaTituloOn: aCanvas [
 	aCanvas paragraph: [
-		aCanvas label: [ aCanvas strong: 'T√≠tulo:' ].
+		aCanvas label: [ aCanvas strong: 'Título:' ].
 		aCanvas space.
 		aCanvas textInput on: #titulo of: self.
 	].
@@ -152,12 +152,12 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaTituloOn: aCanvas [
 CuOOraEditorPreguntaComponent >> renderCrearPreguntaVerQuitarTopicosOn: aCanvas [
 	(nuevosTopicos)
 	ifEmpty: [ 
-		aCanvas paragraph: [ aCanvas text: 'Debe seleccionar al menos un t√≥pico, y puede agregar varios.' ].
+		aCanvas paragraph: [ aCanvas text: 'Debe seleccionar al menos un tópico, y puede agregar varios.' ].
 		^self.
 	].
 	
 	aCanvas paragraph: [ 
-		aCanvas label: [ aCanvas strong: 'Quitar el t√≥pico: '. ].
+		aCanvas label: [ aCanvas strong: 'Quitar el tópico: '. ].
 		nuevosTopicos do: [ :unTopico | 
 			aCanvas anchor callback: [ self quitarElTopico: unTopico; yourself. ]; with: unTopico nombre. aCanvas space.
 		].

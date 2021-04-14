@@ -102,6 +102,11 @@ Usuario >> fechaYHoraDeCreacion [
 	^ fechaHoraCreacion
 ]
 
+{ #category : #'methods for tests' }
+Usuario >> fechaYHoraDeCreacion: aDateAndTime [
+	fechaHoraCreacion := aDateAndTime 
+]
+
 { #category : #initializing }
 Usuario >> initialize [
 	fechaHoraCreacion := DateAndTime now.
@@ -118,12 +123,32 @@ Usuario >> nombre [
 ]
 
 { #category : #accessing }
+Usuario >> preguntas [ 
+	^preguntas
+]
+
+{ #category : #accessing }
+Usuario >> preguntasDeTopicosDeInteres [
+	^topicos flatCollect: [ :unTopico | unTopico preguntas. ]
+]
+
+{ #category : #accessing }
+Usuario >> preguntasDeUsuariosSeguidos [
+	^usuariosSeguidos flatCollect: [ :unUsuario | unUsuario preguntas ]
+]
+
+{ #category : #accessing }
+Usuario >> preguntasPorFechaDescendente [
+	^preguntas asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ]
+]
+
+{ #category : #accessing }
 Usuario >> preguntasRelevantes [
-	|preguntasDeUsuariosSeguidos preguntasDeTopicosDeInteres|
-	preguntasDeUsuariosSeguidos := usuariosSeguidos flatCollect: [ :unUsuario | unUsuario preguntas ] asSet.
-	preguntasDeTopicosDeInteres := topicos flatCollect: [ :unTopico | unTopico preguntas. ] asSet.
-	preguntasDeUsuariosSeguidos addAll: preguntasDeTopicosDeInteres.
-	^preguntasDeUsuariosSeguidos asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
+	|relevantes|
+	relevantes := Set new.
+	relevantes addAll: self preguntasDeTopicosDeInteres.
+	relevantes addAll: self preguntasDeUsuariosSeguidos.
+	^relevantes asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
 
 ]
 
@@ -165,6 +190,11 @@ Usuario >> respondiAMiPreguntaCon: unaRespuesta [
 	^preguntas anySatisfy: [ :unaPregunta | unaPregunta includes: unaRespuesta ].
 ]
 
+{ #category : #accessing }
+Usuario >> respuestas [
+	^respuestas
+]
+
 { #category : #private }
 Usuario >> respuestasAOtrosUsuarios [
 	^respuestas reject: [ :miRespuesta | self respondiAMiPreguntaCon: miRespuesta ]
@@ -186,6 +216,13 @@ Usuario >> tuContrasenaEs: unaContrasena [
 Usuario >> tuNombreEs: unNombre [
 	"Retorna verdadero/falso si el nombre indicado es el del usuario."
 	^nombre asLowercase match: unNombre asLowercase
+]
+
+{ #category : #accessing }
+Usuario >> ultimasPreguntasRelevantes [
+	|top5|
+	top5 := self preguntasRelevantes asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
+	^top5 first: (5 min: (top5 size)).
 ]
 
 { #category : #'methods for tests' }

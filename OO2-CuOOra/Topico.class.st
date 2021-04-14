@@ -58,6 +58,11 @@ Topico >> nombre [
 ]
 
 { #category : #accessing }
+Topico >> preguntas [
+	^preguntas
+]
+
+{ #category : #accessing }
 Topico >> printOn: aStream [
 	"Similar al 'toString()' de java. Al ver el contenido de una colección de objetos de
 	tipo tópicos, se reemplaza el texto 'a Topic' por el 'nombre' del tópico."

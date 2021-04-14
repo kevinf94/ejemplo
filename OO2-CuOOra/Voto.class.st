@@ -62,6 +62,11 @@ Voto >> fechaYHoraDeCreacion [
 	^fechaHoraCreacion
 ]
 
+{ #category : #'methods for tests' }
+Voto >> fechaYHoraDeCreacion: aDateAndTime [
+	fechaHoraCreacion := aDateAndTime 
+]
+
 { #category : #initializing }
 Voto >> initialize [
 	fechaHoraCreacion := DateAndTime now.

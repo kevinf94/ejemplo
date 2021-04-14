@@ -28,24 +28,30 @@ CuOOraHomeComponent >> renderCuerpoOn: aCanvas [
 ]
 
 { #category : #rendering }
+CuOOraHomeComponent >> renderPregunta: unaPregunta On: aCanvas [
+	self renderPreguntaRelevante: unaPregunta tituloOn: aCanvas.
+	self renderPregunta: unaPregunta topicosOn: aCanvas.
+	self renderPregunta: unaPregunta infoOn: aCanvas.
+	self renderPost: unaPregunta creadaOn: aCanvas.
+	self renderPost: unaPregunta votosOn: aCanvas.
+	"self renderBorrarPost: unaPregunta on: aCanvas."
+]
+
+{ #category : #rendering }
 CuOOraHomeComponent >> renderPreguntasRelevantesOn: aCanvas [
 	|relevantes|
-	relevantes := self model ultimas: 5 PreguntasRelevantesParaElUsuario: self session usuario.
+	relevantes := self session usuario preguntasRelevantes.
 	
 	aCanvas heading level: 1; with: 'Ultimas preguntas'.
 
 	aCanvas unorderedList: [ 
 		relevantes do: [ :unaPregunta | 
 			aCanvas listItem: [ 
-				self renderPreguntaRelevante: unaPregunta tituloOn: aCanvas.
-				self renderPregunta: unaPregunta topicosOn: aCanvas.
-				self renderPregunta: unaPregunta infoOn: aCanvas.
-				self renderPost: unaPregunta votosOn: aCanvas.
-				"self renderBorrarPost: unaPregunta on: aCanvas."
+				self renderPregunta: unaPregunta On: aCanvas.
 				(relevantes last = unaPregunta) ifFalse: [ aCanvas horizontalRule. ].
 			].
 		].
 	].
 	aCanvas horizontalRule.
-	
+
 ]

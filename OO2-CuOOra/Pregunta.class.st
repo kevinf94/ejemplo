@@ -42,12 +42,12 @@ Pregunta >> conTopicos: unosTopicos titulo: unTitulo descripcion: unaDescripcion
 	usuario := unUsuario.
 
 	unUsuario agregarPregunta: self.
-	unosTopicos each: [ :unTopico | unTopico agregarPregunta: self ].
+	unosTopicos do: [ :unTopico | unTopico agregarPregunta: self ].
 ]
 
 { #category : #accessing }
 Pregunta >> crearRespuestaConTexto: unTexto usuario: unUsuario [
-	unUsuario agregarRespuesta: (respuestas add: (Respuesta conTexto: unTexto usuario: unUsuario)).
+	^unUsuario agregarRespuesta: (respuestas add: (Respuesta conTexto: unTexto usuario: unUsuario)).
 ]
 
 { #category : #'methods for tests' }
@@ -72,8 +72,8 @@ Pregunta >> initialize [
 
 { #category : #accessing }
 Pregunta >> respuestas [
-	"Retorna la colección de respuestas de la pregunta."
-	^respuestas
+	"Retorna la colección de respuestas de la pregunta, ordenadas por puntaje."
+	^respuestas asSortedCollection: [ :a :b | a puntaje > b puntaje. ]
 ]
 
 { #category : #'methods for tests' }

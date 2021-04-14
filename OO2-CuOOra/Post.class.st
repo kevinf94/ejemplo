@@ -73,6 +73,11 @@ Post >> fechaYHoraDeCreacion [
 	^fechaHoraCreacion
 ]
 
+{ #category : #'methods for tests' }
+Post >> fechaYHoraDeCreacion: aDateAndTime [
+	fechaHoraCreacion := aDateAndTime
+]
+
 { #category : #initializing }
 Post >> initialize [
 	fechaHoraCreacion := DateAndTime now.
