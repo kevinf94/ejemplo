@@ -55,12 +55,6 @@ Post >> cantidadDeLikes [
 	^self likes size
 ]
 
-{ #category : #'methods for tests' }
-Post >> creacion [
-	"Retorna la fecha de creación del post."
-	^fechaHoraCreacion
-]
-
 { #category : #internal }
 Post >> dislikes [
 	"Retorna una colección con todos los votos de tipo 'dislike' del post."
@@ -71,6 +65,12 @@ Post >> dislikes [
 Post >> esDelUsuario: unUsuario [
 	"Retorna verdadero/falso si un post fue realizado por un usuario determinado."
 	^usuario = unUsuario
+]
+
+{ #category : #'methods for tests' }
+Post >> fechaYHoraDeCreacion [
+	"Retorna la fecha de creación del post."
+	^fechaHoraCreacion
 ]
 
 { #category : #initializing }

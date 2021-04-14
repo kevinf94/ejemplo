@@ -7,9 +7,11 @@ Class {
 	#instVars : [
 		'nombre',
 		'contrasena',
+		'fechaHoraCreacion',
 		'usuariosSeguidos',
 		'topicos',
-		'fechaHoraCreacion'
+		'preguntas',
+		'respuestas'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
@@ -17,6 +19,16 @@ Class {
 { #category : #creating }
 Usuario class >> conNombre: unNombreString contrasena: unaContrasenaString [
 	^self new conNombre: unNombreString contrasena: unaContrasenaString
+]
+
+{ #category : #accessing }
+Usuario >> agregarPregunta: unaPregunta [
+	^preguntas add: unaPregunta.
+]
+
+{ #category : #accessing }
+Usuario >> agregarRespuesta: unaRespuesta [
+	^respuestas add: unaRespuesta.
 ]
 
 { #category : #accessing }
@@ -57,35 +69,11 @@ Usuario >> contrasena [
 ]
 
 { #category : #'methods for tests' }
-Usuario >> creacion [
-	"Retorna la fecha y hora en que se creó el usuario."
-	^ fechaHoraCreacion
-]
-
-{ #category : #'methods for tests' }
 Usuario >> dejarDeSeguirAlUsuario: unUsuario [
 	"Elimina de la colección de 'usuarios seguidos' a un determinado usuario y lo retorna.
 	De no existir, retorna el valor nil."
 	^usuariosSeguidos remove: unUsuario ifAbsent: [ ^nil ].
 
-]
-
-{ #category : #accessing }
-Usuario >> esRelevante: unaPregunta [
-	"Retorna verdadero/falso si la pregunta indicada es de relevancia para el usuario."
-	^(self esRelevanteEnTopicos: unaPregunta) or: [ self esRelevanteEnSeguidos: unaPregunta ]
-]
-
-{ #category : #internal }
-Usuario >> esRelevanteEnSeguidos: unaPregunta [
-	"Retorna verdadero/falso si la pregunta indicada es de relevancia. Basándose en los usuarios seguidos."
-	^usuariosSeguidos anySatisfy: [ :unUsuario | unaPregunta esDelUsuario: unUsuario ]
-]
-
-{ #category : #internal }
-Usuario >> esRelevanteEnTopicos: unaPregunta [
-	"Retorna verdadero/falso si la pregunta indicada es de relevancia. Basándose en los tópicos de interés."
-	^topicos anySatisfy: [ :unTopico | unaPregunta tieneElTopico: unTopico ]
 ]
 
 { #category : #'methods for tests' }
@@ -96,6 +84,12 @@ Usuario >> esTopicoDeInteres: unTopico [
 { #category : #'methods for tests' }
 Usuario >> esUsuarioSeguido: unUsuario [
 	^usuariosSeguidos includes: unUsuario
+]
+
+{ #category : #'methods for tests' }
+Usuario >> fechaYHoraDeCreacion [
+	"Retorna la fecha y hora en que se creó el usuario."
+	^ fechaHoraCreacion
 ]
 
 { #category : #initializing }
@@ -111,12 +105,57 @@ Usuario >> nombre [
 	^ nombre
 ]
 
+{ #category : #accessing }
+Usuario >> preguntasRelevantes [
+	|preguntasDeUsuariosSeguidos preguntasDeTopicosDeInteres|
+	preguntasDeUsuariosSeguidos := usuariosSeguidos flatCollect: [ :unUsuario | unUsuario preguntas ] asSet.
+	preguntasDeTopicosDeInteres := topicos flatCollect: [ :unTopico | unTopico preguntas. ] asSet.
+	preguntasDeUsuariosSeguidos addAll: preguntasDeTopicosDeInteres.
+	^preguntasDeUsuariosSeguidos asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
+
+]
+
+{ #category : #accessing }
+Usuario >> puntaje [
+	^self puntajePreguntas + self respuestasAOtrosUsuarios + self puntajePreguntasVotos + self puntajeRespuestasVotos
+]
+
+{ #category : #private }
+Usuario >> puntajePreguntas [
+	^preguntas * 20.
+]
+
+{ #category : #private }
+Usuario >> puntajePreguntasVotos [
+	^preguntas sumNumbers: [ :unaPregunta | unaPregunta puntaje ].
+]
+
+{ #category : #private }
+Usuario >> puntajeRespuestas [
+	^self respuestasAOtrosUsuarios * 50.
+]
+
+{ #category : #private }
+Usuario >> puntajeRespuestasVotos [
+	^self respuestasAOtrosUsuarios sumNumbers: [ :unaRespuesta | unaRespuesta puntaje. ].
+]
+
 { #category : #'methods for tests' }
 Usuario >> quitarTopicoDeInteres: unTopico [
 	"Elimina un tópico de la colección de tópicos de interés del usuario y lo retorna.
 	De no existir, retorna el valor nil."
 	^topicos remove: unTopico ifAbsent: [ ^nil. ].
 
+]
+
+{ #category : #private }
+Usuario >> respondiAMiPreguntaCon: unaRespuesta [
+	^preguntas anySatisfy: [ :unaPregunta | unaPregunta includes: unaRespuesta ].
+]
+
+{ #category : #private }
+Usuario >> respuestasAOtrosUsuarios [
+	^respuestas reject: [ :miRespuesta | self respondiAMiPreguntaCon: miRespuesta ]
 ]
 
 { #category : #'methods for tests' }

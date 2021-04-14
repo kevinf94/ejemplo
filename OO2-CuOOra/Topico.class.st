@@ -6,7 +6,8 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'nombre',
-		'descripcion'
+		'descripcion',
+		'preguntas'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
@@ -14,6 +15,11 @@ Class {
 { #category : #creating }
 Topico class >> conNombre: unNombreString descripcion: unaDescripcionString [
 	^self new conNombre: unNombreString descripcion: unaDescripcionString
+]
+
+{ #category : #accessing }
+Topico >> agregarPregunta: unaPregunta [
+	^preguntas add: unaPregunta 
 ]
 
 { #category : #creating }

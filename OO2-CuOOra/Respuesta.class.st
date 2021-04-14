@@ -20,6 +20,9 @@ Respuesta >> conTexto: unTexto usuario: unUsuario [
 	"Constructor."
 	texto := unTexto.
 	usuario := unUsuario.
+	
+	unUsuario agregarRespuesta: self.
+	
 ]
 
 { #category : #'methods for tests' }

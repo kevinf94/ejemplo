@@ -3,7 +3,7 @@
 "
 Class {
 	#name : #CuOOraEditorPreguntaComponent,
-	#superclass : #WAComponent,
+	#superclass : #CuOOrLayoutComponent,
 	#instVars : [
 		'pregunta',
 		'nuevoTitulo',
@@ -162,6 +162,21 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaVerQuitarTopicosOn: aCanvas 
 			aCanvas anchor callback: [ self quitarElTopico: unTopico; yourself. ]; with: unTopico nombre. aCanvas space.
 		].
 	].
+]
+
+{ #category : #rendering }
+CuOOraEditorPreguntaComponent >> renderCuerpoOn: aCanvas [
+
+	aCanvas heading level: 2; with: 'Crear pregunta'.
+	aCanvas horizontalRule.
+	
+	aCanvas form: [ 
+		self renderCrearPreguntaTituloOn: aCanvas.
+		self renderCrearPreguntaDescripcionOn: aCanvas.
+		self renderCrearPreguntaVerQuitarTopicosOn: aCanvas.
+		self renderCrearPreguntaAgregarTopicosOn: aCanvas.
+		self renderCrearPreguntaBotones: aCanvas.
+	]
 ]
 
 { #category : #rendering }

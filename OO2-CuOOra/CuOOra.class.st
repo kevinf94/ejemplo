@@ -13,8 +13,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'usuarios',
-		'topicos',
-		'preguntas'
+		'topicos'
 	],
 	#classInstVars : [
 		'soleInstance'
@@ -35,37 +34,9 @@ CuOOra class >> soleInstance [
 ]
 
 { #category : #accessing }
-CuOOra >> agregarPreguntaConTopicos: unosTopicos titulo: unTitulo descripcion: unaDescripcion usuario: unUsuario [
-	"Se le pasan a la clase Pregunta los datos para crear una pregunta, y se agrega a la colección de preguntas del sistema y se retorna."
-	^preguntas add: (Pregunta conTopicos: unosTopicos titulo: unTitulo descripcion: unaDescripcion usuario: unUsuario)
-]
-
-{ #category : #accessing }
-CuOOra >> agregarRespuestaParaLaPregunta: unaPregunta texto: unTexto usuario: unUsuario [
-	"metodo que ya no sirve porque existe la interfaz web?"
-	"Se le indica a la instancia de pregunta que tiene que crear una respuesta con los datos indicados."
-	^unaPregunta crearRespuestaConTexto: unTexto usuario: unUsuario
-]
-
-{ #category : #accessing }
 CuOOra >> agregarTopicoConNombre: unNombreString descripcion: unaDescripcionString [
 	"Se crea un tópico y se lo agrega a la colección de tópicos del sistema. Se retorna el tópico creado."
 	^topicos add: (Topico conNombre: unNombreString descripcion: unaDescripcionString)
-]
-
-{ #category : #accessing }
-CuOOra >> agregarTopicoDeInteres: unTopico paraElUsuario: unUsuario [
-	"metodo que ya no sirve porque ahora existe la interfaz web?"
-	"Se le indica a un usuario que debe agregar un tópico a su colección de tópicos."
-	^unUsuario agregarTopicoDeInteres: unTopico
-]
-
-{ #category : #accessing }
-CuOOra >> borrarLaPregunta: unaPregunta [
-	"Se elimina una pregunta de la colección de pregutnas del sistema.
-	Se retorna la pregunta eliminada o nil si no existe esa pregunta."
-	^preguntas remove: unaPregunta ifAbsent: [ ^nil. ]
-	
 ]
 
 { #category : #accessing }
@@ -174,98 +145,16 @@ CuOOra >> mySetUp2 [
 
 ]
 
-{ #category : #accessing }
-CuOOra >> obtenerLasPreguntasConElTopico: unTopico [
-	"Retorna una colección con todas las preguntas que contingan el tópico indicado."
-	^preguntas select: [ :unaPregunta | unaPregunta tieneElTopico: unTopico ]
-	
-]
-
-{ #category : #accessing }
-CuOOra >> obtenerPreguntasRelevantesParaElUsuario: unUsuario [
-	"Retorna una colección con todas las preguntas que contienen alguno de los tópicos que son de interés
-	apra un usuario, junto con todas las preguntas realizadas por los otros usuarios que éste sigue."
-	^preguntas select: [ :unaPregunta | unUsuario esRelevante: unaPregunta ]
-]
-
-{ #category : #accessing }
-CuOOra >> obtenerPuntajeDelUsuario: unUsuario [
-	"acoplamiento?????"
-	"Midiante las preguntas, respuestas, y los votos que recibió, se calcula el puntaje de un usuario."
-	|lasPreguntas puntajePreguntas lasRespuestas puntajeRespuestas|
-	lasPreguntas := self preguntasDelUsuario: unUsuario.
-	lasRespuestas := self respuestasAOtrosUsuariosDelUsuario: unUsuario.
-	puntajePreguntas := lasPreguntas sumNumbers: [ :unaPost | unaPost puntaje ].
-	puntajeRespuestas := lasRespuestas sumNumbers: [ :unaPost | unaPost puntaje ].
-	^(lasPreguntas size * 20) + (lasRespuestas size * 50) + puntajePreguntas + puntajeRespuestas
-]
-
-{ #category : #accessing }
-CuOOra >> obtenerRespuestasDeLaPregunta: unaPregunta [
-	"debería estar este mensaje dentro de la clase Pregunta? es envidia de atributos?
-	unaPregunta obtenerRespuestasOrdenadasPorPuntajeDeMayorAMenor????"
-	
-	"Retorna una colección de respuestas a una determinada pregunta."
-	^unaPregunta respuestas asSortedCollection: [ :unaRespuesta :otraRespuesta | unaRespuesta puntaje > otraRespuesta puntaje ]
-]
-
-{ #category : #accessing }
-CuOOra >> preguntas [
-	"Retorna la colección de preguntas del sistema."
-	^ preguntas
-]
-
-{ #category : #accessing }
-CuOOra >> preguntasDelUsuario: unUsuario [
-	"Retorna una colección de preguntas realizadas por el usurio indicado."
-	^preguntas select: [ :unaPregunta | unaPregunta esTuUsuario: unUsuario ]
-]
-
-{ #category : #internal }
-CuOOra >> preguntasQueNoSonDelUsuario: unUsuario [
-	"Retorna una colección de preguntas que no fueron realizadas por el usuario indicado."
-	^preguntas reject: [ :unaPregunta | unaPregunta esDelUsuario: unUsuario ]
-]
-
-{ #category : #internal }
-CuOOra >> respuestasAOtrosUsuariosDelUsuario: unUsuario [
-	"Retorna una colección de respuestas que hizo un usuario determinado, respuestas que son a preguntas de otros usuarios."
-	|otrasPreguntas|
-	otrasPreguntas := (self preguntasQueNoSonDelUsuario: unUsuario).
-	^otrasPreguntas flatCollect: [ :unaPregunta | unaPregunta obtenerRespuestasDelUsuario: unUsuario ]
-
-]
-
-{ #category : #accessing }
-CuOOra >> respuestasDelUsuario: unUsuario [
-	"Retorna una colección de respuestas que realizo un usuario determinado."
-	^preguntas flatCollect: [ :unaPregunta | unaPregunta obtenerRespuestasDelUsuario: unUsuario ]
-]
-
 { #category : #'methods for tests' }
 CuOOra >> tenesElTopico: unTopico [
 	"Retorna verdadro/falso si la colección de tópicos contiene un tópico determinado."
 	^topicos includes: unTopico
 ]
 
-{ #category : #'methods for tests' }
-CuOOra >> tenesLaPregunta: unaPregunta [
-	"Retorna verdadro/falso si la colección de preguntas contiene una pregunta determinada."
-	^preguntas includes: unaPregunta 
-]
-
 { #category : #accessing }
 CuOOra >> topicos [
 	"Retorna la colección de tópicos."
 	^ topicos
-]
-
-{ #category : #accessing }
-CuOOra >> ultimas: cantidad PreguntasRelevantesParaElUsuario: unUsuario [
-	"Retorna una colección con una cnatidad específica de las últimas preguntas creadas que son relevantes para un usuario."
-	|relevantes|
-	relevantes := (self obtenerPreguntasRelevantesParaElUsuario: unUsuario) asSortedCollection: [ :a :b | a creacion > b creacion ].
-	^relevantes first: (cantidad min: relevantes size)
 ]
 
 { #category : #accessing }

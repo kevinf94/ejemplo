@@ -39,12 +39,14 @@ Pregunta >> conTopicos: unosTopicos titulo: unTitulo descripcion: unaDescripcion
 	titulo := unTitulo.
 	descripcion := unaDescripcion.
 	usuario := unUsuario.
+
+	unUsuario agregarPregunta: self.
+	unosTopicos each: [ :unTopico | unTopico agregarPregunta: self ].
 ]
 
 { #category : #accessing }
 Pregunta >> crearRespuestaConTexto: unTexto usuario: unUsuario [
-	"Crea una respuesta y la agrega a su colección de respuestas. Luego retorna la respuesta."
-	^respuestas add: (Respuesta conTexto: unTexto usuario: unUsuario)
+	unUsuario agregarRespuesta: (respuestas add: (Respuesta conTexto: unTexto usuario: unUsuario)).
 ]
 
 { #category : #'methods for tests' }
@@ -68,12 +70,6 @@ Pregunta >> initialize [
 ]
 
 { #category : #accessing }
-Pregunta >> obtenerRespuestasDelUsuario: unUsuario [
-	"Retorna una colección con las respuestas que pertenecen a un usuario determinado."
-	^respuestas select: [ :unaRespuesta | unaRespuesta esDelUsuario: unUsuario ]
-]
-
-{ #category : #accessing }
 Pregunta >> respuestas [
 	"Retorna la colección de respuestas de la pregunta."
 	^respuestas
@@ -88,6 +84,7 @@ Pregunta >> tenesLaRespuesta: unaRespuesta [
 { #category : #accessing }
 Pregunta >> tieneElTopico: unTopico [
 	"Retorna verdadero/falso si la pregunta contiene el tópico indicado."
+	"estaría de más???? <---------------------------------------------------------------------------------"
 	^topicos anySatisfy: [ :esteTopico | esteTopico esElTopico: unTopico ]
 ]
 
