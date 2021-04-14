@@ -5,6 +5,7 @@ Class {
 	#name : #CuOOraEditorPreguntaComponent,
 	#superclass : #CuOOrLayoutComponent,
 	#instVars : [
+		'cuooraSoleInstance',
 		'pregunta',
 		'nuevoTitulo',
 		'nuevaDescripcion',
@@ -63,17 +64,13 @@ CuOOraEditorPreguntaComponent >> initialize [
 	super initialize.
 	topicosDelSistema := self topicosDelSistemaOrdenados.
 	nuevosTopicos := OrderedCollection new.
+	cuooraSoleInstance := CuOOra soleInstance
 ]
 
 { #category : #callbacks }
 CuOOraEditorPreguntaComponent >> logOut [
     self session unregister. 
     self requestContext redirectTo: self application url
-]
-
-{ #category : #private }
-CuOOraEditorPreguntaComponent >> model [
-	^CuOOra soleInstance
 ]
 
 { #category : #callbacks }
