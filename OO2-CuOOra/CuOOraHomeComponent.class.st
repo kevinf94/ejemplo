@@ -34,7 +34,8 @@ CuOOraHomeComponent >> renderPregunta: unaPregunta On: aCanvas [
 	self renderPregunta: unaPregunta infoOn: aCanvas.
 	self renderPost: unaPregunta creadaOn: aCanvas.
 	self renderPost: unaPregunta votosOn: aCanvas.
-	"self renderBorrarPost: unaPregunta on: aCanvas."
+	self renderBorrarPost: unaPregunta on: aCanvas.
+	
 ]
 
 { #category : #rendering }

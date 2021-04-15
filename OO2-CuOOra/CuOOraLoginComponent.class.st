@@ -27,7 +27,7 @@ CuOOraLoginComponent >> registerNewUser [
 CuOOraLoginComponent >> renderButtonsOn: aCanvas [
 	self renderSignInButtonOn: aCanvas.
 	aCanvas horizontalRule.
-	aCanvas paragraph: 'No tienes una cuenta?'.
+	aCanvas paragraph: '¿No tienes una cuenta?'.
 	self renderSignUpButtonOn: aCanvas
 ]
 

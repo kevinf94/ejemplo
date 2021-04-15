@@ -74,6 +74,7 @@ CuOOrLayoutComponent >> logOut [
 
 { #category : #rendering }
 CuOOrLayoutComponent >> renderBorrarPost: unPost on: aCanvas [
+	(unPost usuario = self session usuario) ifFalse: [ ^self. ].
 	aCanvas form: [ 
 		aCanvas submitButton callback: [ self borrarPost: unPost. ]; value: ' Eliminar '.
 	].
