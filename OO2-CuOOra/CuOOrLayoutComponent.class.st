@@ -26,6 +26,45 @@ CuOOrLayoutComponent >> buttonLike: unPost [
 	ifFalse: [ unPost quitarLikeDelUsuario: (self session usuario) ].
 ]
 
+{ #category : #private }
+CuOOrLayoutComponent >> fechaConNombre: aDateAndTime [
+	^(aDateAndTime dayOfWeekName) ,' ', (aDateAndTime dayOfMonth)asString, ', ', (aDateAndTime monthName), ' ', (aDateAndTime year)asString,'.'.
+
+	"Armar diccionario"
+	"|nombreDelDia nombreDelMes|
+	nombreDelDia := aDateAndTime dayOfWeekName.
+	nombreDelMes := aDateAndTime monthName.
+	
+	((nombreDelDia asLowercase) match: ('Sunday' asLowercase)) ifTrue: [ nombreDelDia := 'Domingo' ].
+	((nombreDelDia asLowercase) match: ('Monday' asLowercase)) ifTrue: [ nombreDelDia := 'Lunes' ].
+	((nombreDelDia asLowercase) match: ('Tuesday' asLowercase)) ifTrue: [ nombreDelDia := 'Martes' ].
+	((nombreDelDia asLowercase) match: ('Wednesday' asLowercase)) ifTrue: [ nombreDelDia := 'Miercoles' ].
+	((nombreDelDia asLowercase) match: ('Thursday' asLowercase)) ifTrue: [ nombreDelDia := 'Jueves' ].
+	((nombreDelDia asLowercase) match: ('Friday' asLowercase)) ifTrue: [ nombreDelDia := 'Viernes' ].
+	((nombreDelDia asLowercase) match: ('Saturday' asLowercase)) ifTrue: [ nombreDelDia := 'Sabado' ].
+
+	
+	((nombreDelMes asLowercase) match: ('January' asLowercase)) ifTrue: [ nombreDelMes := 'Enero' ].
+	((nombreDelMes asLowercase) match: ('February' asLowercase)) ifTrue: [ nombreDelMes := 'Febrero' ].
+	((nombreDelMes asLowercase) match: ('March' asLowercase)) ifTrue: [ nombreDelMes := 'Marzo' ].
+	((nombreDelMes asLowercase) match: ('April' asLowercase)) ifTrue: [ nombreDelMes := 'Abril' ].
+	((nombreDelMes asLowercase) match: ('May' asLowercase)) ifTrue: [ nombreDelMes := 'Mayo' ].
+	((nombreDelMes asLowercase) match: ('June' asLowercase)) ifTrue: [ nombreDelMes := 'Junio' ].
+	((nombreDelMes asLowercase) match: ('July' asLowercase)) ifTrue: [ nombreDelMes := 'Julio' ].
+	((nombreDelMes asLowercase) match: ('August' asLowercase)) ifTrue: [ nombreDelMes := 'Agosto' ].
+	((nombreDelMes asLowercase) match: ('September' asLowercase)) ifTrue: [ nombreDelMes := 'Septiembre' ].
+	((nombreDelMes asLowercase) match: ('October' asLowercase)) ifTrue: [ nombreDelMes := 'Octubre' ].
+	((nombreDelMes asLowercase) match: ('November' asLowercase)) ifTrue: [ nombreDelMes := 'Noviembre' ].
+	((nombreDelMes asLowercase) match: ('December' asLowercase)) ifTrue: [ nombreDelMes := 'Diciembre' ].
+	
+	^nombreDelDia,' ', (aDateAndTime dayOfMonth)asString, ', ', nombreDelMes, ' ', (aDateAndTime year)asString,'.'."
+]
+
+{ #category : #initializing }
+CuOOrLayoutComponent >> initialize [
+	super initialize
+]
+
 { #category : #callbacks }
 CuOOrLayoutComponent >> logOut [
     self session unregister. 
@@ -70,7 +109,8 @@ CuOOrLayoutComponent >> renderLinkAlPerfilDelUsuario: unUsuario On: aCanvas [
 { #category : #rendering }
 CuOOrLayoutComponent >> renderPost: unPost creadaOn: aCanvas [
 	aCanvas paragraph: [ 
-		aCanvas text: 'Creada: ', (unPost fechaYHoraDeCreacion) asString.
+		aCanvas text: 'Creada: ', (self fechaConNombre: (unPost fechaYHoraDeCreacion)).
+		
 	].
 ]
 

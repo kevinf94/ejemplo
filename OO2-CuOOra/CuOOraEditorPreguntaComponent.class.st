@@ -61,10 +61,12 @@ CuOOraEditorPreguntaComponent >> descripcion: unaDescripcion [
 
 { #category : #initializing }
 CuOOraEditorPreguntaComponent >> initialize [
+
 	super initialize.
+	cuooraSoleInstance := CuOOra soleInstance.
 	topicosDelSistema := self topicosDelSistemaOrdenados.
 	nuevosTopicos := OrderedCollection new.
-	cuooraSoleInstance := CuOOra soleInstance
+
 ]
 
 { #category : #callbacks }
@@ -87,22 +89,6 @@ CuOOraEditorPreguntaComponent >> publicarPregunta [
 CuOOraEditorPreguntaComponent >> quitarElTopico: unTopico [
 	nuevosTopicos remove: unTopico.
 	topicosDelSistema add: unTopico.
-]
-
-{ #category : #rendering }
-CuOOraEditorPreguntaComponent >> renderContentOn: aCanvas [
-	self renderEncabezadoOn: aCanvas.
-	
-	aCanvas heading level: 2; with: 'Crear pregunta'.
-	aCanvas horizontalRule.
-	
-	aCanvas form: [ 
-		self renderCrearPreguntaTituloOn: aCanvas.
-		self renderCrearPreguntaDescripcionOn: aCanvas.
-		self renderCrearPreguntaVerQuitarTopicosOn: aCanvas.
-		self renderCrearPreguntaAgregarTopicosOn: aCanvas.
-		self renderCrearPreguntaBotones: aCanvas.
-	]
 ]
 
 { #category : #rendering }
@@ -163,7 +149,7 @@ CuOOraEditorPreguntaComponent >> renderCrearPreguntaVerQuitarTopicosOn: aCanvas 
 
 { #category : #rendering }
 CuOOraEditorPreguntaComponent >> renderCuerpoOn: aCanvas [
-
+	
 	aCanvas heading level: 2; with: 'Crear pregunta'.
 	aCanvas horizontalRule.
 	
@@ -174,6 +160,7 @@ CuOOraEditorPreguntaComponent >> renderCuerpoOn: aCanvas [
 		self renderCrearPreguntaAgregarTopicosOn: aCanvas.
 		self renderCrearPreguntaBotones: aCanvas.
 	]
+
 ]
 
 { #category : #rendering }
@@ -206,5 +193,5 @@ CuOOraEditorPreguntaComponent >> topicos: unosTopicos [
 
 { #category : #private }
 CuOOraEditorPreguntaComponent >> topicosDelSistemaOrdenados [
-	^self model topicos asSortedCollection: [ :a :b | a nombre < b nombre ]
+	^(cuooraSoleInstance topicos) asSortedCollection: [ :a :b | a nombre < b nombre ]
 ]
