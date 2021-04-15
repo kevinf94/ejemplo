@@ -7,16 +7,16 @@ Class {
 	#instVars : [
 		'nombre',
 		'contrasena',
-		'fechaHoraCreacion',
 		'usuariosSeguidos',
 		'topicos',
 		'preguntas',
-		'respuestas'
+		'respuestas',
+		'fechaYHoraDeCreacion'
 	],
 	#category : #'OO2-CuOOra-ModeloDeDominio'
 }
 
-{ #category : #creating }
+{ #category : #'instance creation' }
 Usuario class >> conNombre: unNombreString contrasena: unaContrasenaString [
 	^self new conNombre: unNombreString contrasena: unaContrasenaString
 ]
@@ -65,7 +65,7 @@ Usuario >> cantidadDetopicosDeInteres [
 	^topicos size.
 ]
 
-{ #category : #creating }
+{ #category : #'instance creation' }
 Usuario >> conNombre: unNombreString contrasena: unaContrasenaString [
 	"Constructor."
 	nombre := unNombreString.
@@ -99,17 +99,17 @@ Usuario >> esUsuarioSeguido: unUsuario [
 { #category : #'methods for tests' }
 Usuario >> fechaYHoraDeCreacion [
 	"Retorna la fecha y hora en que se creó el usuario."
-	^ fechaHoraCreacion
+	^ fechaYHoraDeCreacion
 ]
 
 { #category : #'methods for tests' }
 Usuario >> fechaYHoraDeCreacion: aDateAndTime [
-	fechaHoraCreacion := aDateAndTime 
+	fechaYHoraDeCreacion := aDateAndTime 
 ]
 
 { #category : #initializing }
 Usuario >> initialize [
-	fechaHoraCreacion := DateAndTime now.
+	fechaYHoraDeCreacion := DateAndTime now.
 	usuariosSeguidos := Set new.
 	topicos := Set new.
 	preguntas := Set new.
@@ -127,12 +127,12 @@ Usuario >> preguntas [
 	^preguntas
 ]
 
-{ #category : #accessing }
-Usuario >> preguntasDeTopicosDeInteres [
+{ #category : #private }
+Usuario >> preguntasConTopicosDeInteres [
 	^topicos flatCollect: [ :unTopico | unTopico preguntas. ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 Usuario >> preguntasDeUsuariosSeguidos [
 	^usuariosSeguidos flatCollect: [ :unUsuario | unUsuario preguntas ]
 ]
@@ -146,7 +146,7 @@ Usuario >> preguntasPorFechaDescendente [
 Usuario >> preguntasRelevantes [
 	|relevantes|
 	relevantes := Set new.
-	relevantes addAll: self preguntasDeTopicosDeInteres.
+	relevantes addAll: self preguntasConTopicosDeInteres.
 	relevantes addAll: self preguntasDeUsuariosSeguidos.
 	^relevantes asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
 
@@ -154,26 +154,26 @@ Usuario >> preguntasRelevantes [
 
 { #category : #accessing }
 Usuario >> puntaje [
-	^self puntajePreguntas + self respuestasAOtrosUsuarios + self puntajePreguntasVotos + self puntajeRespuestasVotos
+	^self puntajePorPreguntasPublicadas + self respuestasAOtrosUsuarios + self puntajePorVotosDePreguntasPublicadas + self puntajePorVotosDeRespuestasPublicadas
 ]
 
 { #category : #private }
-Usuario >> puntajePreguntas [
+Usuario >> puntajePorPreguntasPublicadas [
 	^preguntas * 20.
 ]
 
 { #category : #private }
-Usuario >> puntajePreguntasVotos [
-	^preguntas sumNumbers: [ :unaPregunta | unaPregunta puntaje ].
-]
-
-{ #category : #private }
-Usuario >> puntajeRespuestas [
+Usuario >> puntajePorRespuestasPublicadas [
 	^self respuestasAOtrosUsuarios * 50.
 ]
 
 { #category : #private }
-Usuario >> puntajeRespuestasVotos [
+Usuario >> puntajePorVotosDePreguntasPublicadas [
+	^preguntas sumNumbers: [ :unaPregunta | unaPregunta puntaje ].
+]
+
+{ #category : #private }
+Usuario >> puntajePorVotosDeRespuestasPublicadas [
 	^self respuestasAOtrosUsuarios sumNumbers: [ :unaRespuesta | unaRespuesta puntaje. ].
 ]
 
@@ -220,6 +220,7 @@ Usuario >> tuNombreEs: unNombre [
 
 { #category : #accessing }
 Usuario >> ultimasPreguntasRelevantes [
+	"Retorna las primeras 5 preguntas mas recientemente creadas que son relevantes para el usuario."
 	|top5|
 	top5 := self preguntasRelevantes asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
 	^top5 first: (5 min: (top5 size)).

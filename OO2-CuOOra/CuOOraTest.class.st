@@ -8,13 +8,7 @@ Class {
 		'topic3',
 		'user1',
 		'user2',
-		'user3',
-		'ask1',
-		'ask2',
-		'ask3',
-		'ans1',
-		'ans2',
-		'ans3'
+		'user3'
 	],
 	#category : #'OO2-CuOOra-TestDeUnidad'
 }
@@ -22,7 +16,28 @@ Class {
 { #category : #running }
 CuOOraTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
+	
 	|desc|
+	sistema := CuOOra new.
+	
+	topic1 := 'Pharo'. desc := 'Entorno de desarrollo para smalltalk.'.
+	topic1 := sistema agregarTopicoConNombre: topic1 descripcion: desc.
+	topic2 := 'OO2'. desc := 'Orientación a objetos 2.'.
+	topic2 := sistema agregarTopicoConNombre: topic2 descripcion: desc.
+	topic3 := 'Info-UNLP'. desc := 'Facultad de Informática de la UNLP.'.
+	topic3 := sistema agregarTopicoConNombre: topic3 descripcion: desc.
+	
+	user1 := sistema crearUnNuevoUsuarioConNombre: 'user1' contrasena: 'user1'.
+	user2 := sistema crearUnNuevoUsuarioConNombre: 'user2' contrasena: 'user2'.
+	user3 := sistema crearUnNuevoUsuarioConNombre: 'user3' contrasena: 'user3'.
+	
+	
+	
+	
+	
+	
+	"ya no sirve:"	
+	"|desc|
 
 	sistema := CuOOra new.
 	
@@ -65,7 +80,7 @@ CuOOraTest >> setUp [
 	desc := 'jajajaja'.
 	ans3 := sistema agregarRespuestaParaLaPregunta: ask3 texto: desc usuario: user1.
 	ans3 agregarLikeDelUsuario: user2.
-	
+	"
 ]
 
 { #category : #tests }
@@ -87,7 +102,7 @@ CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
 	
 	|usuarios user|
 	
-	usuarios := sistema usuariosSeguidos.
+	usuarios := sistema usuarios.
 	user := sistema crearUnNuevoUsuarioConNombre: 'Test' contrasena: 'pass'.
 	
 	self assert: (usuarios includes: user).

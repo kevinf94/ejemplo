@@ -8,8 +8,8 @@ Class {
 }
 
 { #category : #actions }
-CuOOrLayoutComponent >> borrarPregunta: unaPregunta [
-	self model borrarLaPregunta: unaPregunta
+CuOOrLayoutComponent >> borrarPost: unaPost [
+	unaPost borrate
 ]
 
 { #category : #callbacks }
@@ -75,7 +75,7 @@ CuOOrLayoutComponent >> logOut [
 { #category : #rendering }
 CuOOrLayoutComponent >> renderBorrarPost: unPost on: aCanvas [
 	aCanvas form: [ 
-		aCanvas submitButton callback: [ self borrarPregunta: unPost. ]; value: ' X '.
+		aCanvas submitButton callback: [ self borrarPost: unPost. ]; value: ' Eliminar '.
 	].
 ]
 

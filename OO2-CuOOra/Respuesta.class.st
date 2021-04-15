@@ -17,7 +17,7 @@ Respuesta class >> conTexto: unTexto usuario: unUsuario [
 
 { #category : #accessing }
 Respuesta >> borrate [
-	usuario borrarRespuesta: self.
+	usuario borrarLaRespuesta: self.
 ]
 
 { #category : #creating }

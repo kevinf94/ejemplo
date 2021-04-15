@@ -37,6 +37,11 @@ Post >> agregarLikeDelUsuario: unUsuario [
 	elVoto esDislike ifTrue: [ elVoto cambiar ]
 ]
 
+{ #category : #accessing }
+Post >> borrate [
+	self subclassResponsibility
+]
+
 { #category : #internal }
 Post >> buscarVotoDelUsuario: unUsuario [
 	"Busca el voto de un usuario determinado y lo retorna, si no existe, retorna el valor nil."

@@ -13,8 +13,7 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'usuarios',
-		'topicos',
-		'start'
+		'topicos'
 	],
 	#classInstVars : [
 		'soleInstance'
@@ -61,14 +60,12 @@ CuOOra >> initialize [
 	usuarios := Set new.
 	topicos := Set new.
 	
-	start := DateAndTime now.
-	
 	self mySetUp.
 	self mySetUp2.
 
 ]
 
-{ #category : #initializing }
+{ #category : #'methods for tests' }
 CuOOra >> mySetUp [
 	"set up para testing"
 	|user1 user2 user3 user4 ask1 ask2 ask3 ask4 ask5 ans1 topic1 topic2 topic3 topic4 topic5 topic6 topic7|
@@ -118,7 +115,7 @@ CuOOra >> mySetUp [
 
 ]
 
-{ #category : #initializing }
+{ #category : #'methods for tests' }
 CuOOra >> mySetUp2 [
 	"Contenido prefijado de CuOOra para la corrección del trabajo práctico 1."
 	
@@ -170,4 +167,9 @@ CuOOra >> userWithName: unNombre protectedBy: unaContrasena [
 	^ usuarios
 		detect: [ :unUsuario | (unUsuario tuNombreEs: unNombre) and: [ (unUsuario tuContrasenaEs: unaContrasena) ] ]
 		ifNone: [ nil ]
+]
+
+{ #category : #'methods for tests' }
+CuOOra >> usuarios [
+	^usuarios
 ]
