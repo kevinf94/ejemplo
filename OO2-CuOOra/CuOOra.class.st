@@ -60,8 +60,10 @@ CuOOra >> initialize [
 	usuarios := Set new.
 	topicos := Set new.
 	
-	self mySetUp.
-	self mySetUp2.
+	"Se comenta este set up para no interferir con el set up requerido para la entrega."
+	"self mySetUp."
+	
+	self setUpParaEntrega.
 
 ]
 
@@ -116,7 +118,7 @@ CuOOra >> mySetUp [
 ]
 
 { #category : #'methods for tests' }
-CuOOra >> mySetUp2 [
+CuOOra >> setUpParaEntrega [
 	"Contenido prefijado de CuOOra para la corrección del trabajo práctico 1."
 	
 	|user1 user2 user3 topic1 topic2 topic3 ask1 ask2 ans1 ans2|
