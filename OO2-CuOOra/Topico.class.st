@@ -46,6 +46,11 @@ Topico >> esElTopico: unTopico [
 	^self = unTopico
 ]
 
+{ #category : #'methods for tests' }
+Topico >> esUsadoEnLaPregunta: unaPregunta [
+	^preguntas includes: unaPregunta 
+]
+
 { #category : #initialization }
 Topico >> initialize [
 	preguntas := Set new.

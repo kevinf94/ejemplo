@@ -56,6 +56,11 @@ Usuario >> borrarLaRespuesta: unaRespuesta [
 ]
 
 { #category : #'methods for tests' }
+Usuario >> cantidadDeRespuestas [
+	^respuestas size.
+]
+
+{ #category : #'methods for tests' }
 Usuario >> cantidadDeUsuariosSeguidos [
 	"Retorna la cantidad de usuarios seguidos del usuario."
 	^usuariosSeguidos size.
@@ -192,6 +197,11 @@ Usuario >> respondiAMiPreguntaCon: unaRespuesta [
 	^preguntas anySatisfy: [ :unaPregunta | unaPregunta tenesLaRespuesta: unaRespuesta ].
 ]
 
+{ #category : #'methods for tests' }
+Usuario >> respondio: unaRespuesta [
+	^respuestas includes: unaRespuesta .
+]
+
 { #category : #accessing }
 Usuario >> respuestas [
 	^respuestas
@@ -200,6 +210,11 @@ Usuario >> respuestas [
 { #category : #private }
 Usuario >> respuestasAOtrosUsuarios [
 	^respuestas reject: [ :miRespuesta | self respondiAMiPreguntaCon: miRespuesta ]
+]
+
+{ #category : #'methods for tests' }
+Usuario >> tienePregunta: aPregunta [
+	^preguntas includes: aPregunta
 ]
 
 { #category : #'methods for tests' }
