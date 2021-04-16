@@ -50,6 +50,8 @@ Usuario >> borrarLaPregunta: unaPregunta [
 
 { #category : #'methods for tests' }
 Usuario >> borrarLaRespuesta: unaRespuesta [
+	"Mensaje para una futura expansión de funcionalidad."
+	"Elimina una respuesta de la colección de respuestas del usaurio."
 	^respuestas remove: unaRespuesta ifAbsent: [ ^nil ].
 ]
 
@@ -154,17 +156,17 @@ Usuario >> preguntasRelevantes [
 
 { #category : #accessing }
 Usuario >> puntaje [
-	^self puntajePorPreguntasPublicadas + self respuestasAOtrosUsuarios + self puntajePorVotosDePreguntasPublicadas + self puntajePorVotosDeRespuestasPublicadas
+	^self puntajePorPreguntasPublicadas + self puntajePorRespuestasPublicadas + self puntajePorVotosDePreguntasPublicadas + self puntajePorVotosDeRespuestasPublicadas
 ]
 
 { #category : #private }
 Usuario >> puntajePorPreguntasPublicadas [
-	^preguntas * 20.
+	^preguntas size * 20.
 ]
 
 { #category : #private }
 Usuario >> puntajePorRespuestasPublicadas [
-	^self respuestasAOtrosUsuarios * 50.
+	^(self respuestasAOtrosUsuarios size) * 50.
 ]
 
 { #category : #private }
@@ -174,7 +176,7 @@ Usuario >> puntajePorVotosDePreguntasPublicadas [
 
 { #category : #private }
 Usuario >> puntajePorVotosDeRespuestasPublicadas [
-	^self respuestasAOtrosUsuarios sumNumbers: [ :unaRespuesta | unaRespuesta puntaje. ].
+	^(self respuestasAOtrosUsuarios) sumNumbers: [ :unaRespuesta | unaRespuesta puntaje. ].
 ]
 
 { #category : #'methods for tests' }
@@ -187,7 +189,7 @@ Usuario >> quitarTopicoDeInteres: unTopico [
 
 { #category : #private }
 Usuario >> respondiAMiPreguntaCon: unaRespuesta [
-	^preguntas anySatisfy: [ :unaPregunta | unaPregunta includes: unaRespuesta ].
+	^preguntas anySatisfy: [ :unaPregunta | unaPregunta tenesLaRespuesta: unaRespuesta ].
 ]
 
 { #category : #accessing }
@@ -209,18 +211,19 @@ Usuario >> topicos [
 { #category : #accessing }
 Usuario >> tuContrasenaEs: unaContrasena [
 	"Retorna verdadero/falso si la contraseña indicada es la del usuario."
-	^contrasena match: unaContrasena
+	^contrasena = unaContrasena
 ]
 
 { #category : #accessing }
 Usuario >> tuNombreEs: unNombre [
 	"Retorna verdadero/falso si el nombre indicado es el del usuario."
-	^nombre asLowercase match: unNombre asLowercase
+	^nombre asLowercase = unNombre asLowercase
 ]
 
 { #category : #accessing }
 Usuario >> ultimasPreguntasRelevantes [
 	"Retorna las primeras 5 preguntas mas recientemente creadas que son relevantes para el usuario."
+	"¿Deberia reemplzarce el 5 por una parámetro?"
 	|top5|
 	top5 := self preguntasRelevantes asSortedCollection: [ :a :b | a fechaYHoraDeCreacion > b fechaYHoraDeCreacion ].
 	^top5 first: (5 min: (top5 size)).
