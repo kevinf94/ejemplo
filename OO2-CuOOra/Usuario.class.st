@@ -45,13 +45,15 @@ Usuario >> agregarUsuarioParaSeguir: unUsuario [
 
 { #category : #accessing }
 Usuario >> borrarLaPregunta: unaPregunta [
+	"Elimina una pregunta de la colección de preguntas del usuario. Este mensaje
+	es enviado por la clase Pregunta para mantener la consistencia de los datos."
 	^preguntas remove: unaPregunta ifAbsent: [ ^nil ].
 ]
 
 { #category : #'methods for tests' }
 Usuario >> borrarLaRespuesta: unaRespuesta [
-	"Mensaje para una futura expansión de funcionalidad."
-	"Elimina una respuesta de la colección de respuestas del usaurio."
+	"Elimina una respuesta de la colección de respuestas del usuario. Este mensaje
+	es enviado por la clase Respuesta para mantener la consistencia de los datos."
 	^respuestas remove: unaRespuesta ifAbsent: [ ^nil ].
 ]
 
@@ -90,6 +92,7 @@ Usuario >> dejarDeSeguirAlUsuario: unUsuario [
 
 { #category : #'methods for tests' }
 Usuario >> esTopicoDeInteres: unTopico [
+	"Retorna true si un tópico esta en la colección de topicos del usuario."
 	^topicos includes: unTopico
 ]
 
@@ -176,20 +179,33 @@ Usuario >> puntajePorVotosDePreguntasPublicadas [
 
 { #category : #private }
 Usuario >> puntajePorVotosDeRespuestasPublicadas [
-	^(self respuestasAOtrosUsuarios) sumNumbers: [ :unaRespuesta | unaRespuesta puntaje. ].
+	"Devuelve el puntaje obtenido por votos a las respuestas realizadas por el usuario."
+	^respuestas sumNumbers: [ :unaRespuesta | unaRespuesta puntaje ].
+	
+	"Devuelve el puntaje obtenido por votos a las respuestas realizadas a otros usuarios, por el usuario."
+	"^(self respuestasAOtrosUsuarios) sumNumbers: [ :unaRespuesta | unaRespuesta puntaje. ]."
 ]
 
 { #category : #'methods for tests' }
 Usuario >> quitarTopicoDeInteres: unTopico [
 	"Elimina un tópico de la colección de tópicos de interés del usuario y lo retorna.
-	De no existir, retorna el valor nil."
+	De no existir, retorna el valor nil.
+	Mensaje implementado para una próxima expansión en la funcionalidad de la interfaz web."
+	
 	^topicos remove: unTopico ifAbsent: [ ^nil. ].
 
 ]
 
 { #category : #private }
 Usuario >> respondiAMiPreguntaCon: unaRespuesta [
-	^preguntas anySatisfy: [ :unaPregunta | unaPregunta tenesLaRespuesta: unaRespuesta ].
+	"Retorna true/false si una respuesta esta includia en una de sus preguntas."
+	"La verificación del usuario surge de los métodos de test, en el que se rompe el protocolo 'private' y se
+	envia una respuesta de otro usuario que se encuentra en la colección de respuesta de la pregunta, ya que
+	retornaba verdadero y debía ser falso."
+	
+	^preguntas anySatisfy: [ :unaPregunta | 
+		(unaPregunta esDelUsuario: self) and: [ (unaRespuesta esDelUsuario: self) and: [ unaPregunta tenesLaRespuesta: unaRespuesta ] ]
+	].
 ]
 
 { #category : #accessing }

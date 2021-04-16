@@ -27,9 +27,9 @@ CuOOraTest >> setUp [
 	topic3 := 'Info-UNLP'. desc := 'Facultad de Informática de la UNLP.'.
 	topic3 := sistema agregarTopicoConNombre: topic3 descripcion: desc.
 	
-	user1 := sistema crearUnNuevoUsuarioConNombre: 'user1' contrasena: 'user1'.
-	user2 := sistema crearUnNuevoUsuarioConNombre: 'user2' contrasena: 'user2'.
-	user3 := sistema crearUnNuevoUsuarioConNombre: 'user3' contrasena: 'user3'.
+	user1 := sistema crearUnNuevoUsuarioConNombre: 'userTest1' contrasena: 'user1'.
+	user2 := sistema crearUnNuevoUsuarioConNombre: 'userTest2' contrasena: 'user2'.
+	user3 := sistema crearUnNuevoUsuarioConNombre: 'userTest3' contrasena: 'user3'.
 	
 	
 	
@@ -108,4 +108,36 @@ CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
 	self assert: (usuarios includes: user).
 	self assert: user nombre equals: 'Test'.
 	self assert: user contrasena equals: 'pass'.
+]
+
+{ #category : #tests }
+CuOOraTest >> testExisteUsuarioConNombre [
+
+	"Verifica el correcto funcionamiento del mensaje."
+
+	self assert: (sistema existeUsuarioConNombre: 'user1').
+	self assert: (sistema existeUsuarioConNombre: 'UsER1').
+	self deny: (sistema existeUsuarioConNombre: 'no existe este usuario en la soleInstance...').
+]
+
+{ #category : #tests }
+CuOOraTest >> testTenesElTopico [
+
+	"Verfica el correcto funcionamiento del mensaje."
+
+	|topic|
+	
+	self assert: (sistema tenesElTopico: topic1).
+	topic := Topico conNombre: 'test' descripcion: 'testing...'.
+	self deny: (sistema tenesElTopico: topic).
+]
+
+{ #category : #tests }
+CuOOraTest >> testUserWithNameProtectedBy [
+	"Verficia la correcta busqueda de un usuario mediante su nombre de usuario y contraseña."
+	
+	self assert: ((sistema userWithName: 'userTest1' protectedBy: 'user1') isNotNil).
+	self assert: ((sistema userWithName: 'usertest1' protectedBy: 'uSEr1') isNil).
+	self assert: ((sistema userWithName: 'usertest1' protectedBy: 'asddd') isNil).
+	self assert: ((sistema userWithName: 'user que no existe' protectedBy: 'tampoco la password') isNil).
 ]

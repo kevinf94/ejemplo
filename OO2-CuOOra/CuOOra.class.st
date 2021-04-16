@@ -41,8 +41,8 @@ CuOOra >> agregarTopicoConNombre: unNombreString descripcion: unaDescripcionStri
 
 { #category : #accessing }
 CuOOra >> crearUnNuevoUsuarioConNombre: unNombreString contrasena: unaContrasenaString [
-	"deberia verificar la existencia del nombre?
-	(self existeUsuarioConNombre: unNombreString) ifTrue: [ ^nil. ]."
+	"deberia verificar la existencia del nombre?"
+	"(self existeUsuarioConNombre: unNombreString) ifTrue: [ ^nil. ]."
 	
 	"Crea y agrega un nuevo usuario a la colección de usuarios del sistema. Se retorna el nuevo usuario."
 	^usuarios add: (Usuario conNombre: unNombreString contrasena: unaContrasenaString).

@@ -176,6 +176,75 @@ UsuarioTest >> testBorrarLaPregunta [
 ]
 
 { #category : #tests }
+UsuarioTest >> testBorrarLaRespuesta [
+	"Se verifica la eliminación de una respuesta de la colección de respuestas de un usuario.
+	Este mensaje es enviado por la clase Respuesta cuando se borra a si misma."
+
+	self assert: user1 respuestas size equals: 1.
+	self assert: (user1 respuestas includes: ans2).
+	user1 borrarLaRespuesta: ans2.
+	self assert: user1 respuestas size equals: 0.
+	self deny: (user1 respuestas includes: ans2).
+]
+
+{ #category : #tests }
+UsuarioTest >> testDejarDeSeguirAlUsuario [
+
+	user1 agregarUsuarioParaSeguir: user2.
+	self assert: user1 cantidadDeUsuariosSeguidos equals: 1.
+	self assert: (user1 usuariosSeguidos includes: user2).
+	user1 dejarDeSeguirAlUsuario: user2.
+	self assert: user1 cantidadDeUsuariosSeguidos equals: 0.
+	self deny: (user1 usuariosSeguidos includes: user2).
+
+]
+
+{ #category : #tests }
+UsuarioTest >> testEsTopicoDeInteres [
+	"Verifica el correcto funcionamineto del mensaje."
+	
+	self deny: (user1 esTopicoDeInteres: topic1).
+	user1 agregarTopicoDeInteres: topic1.
+	self assert: (user1 esTopicoDeInteres: topic1).
+
+]
+
+{ #category : #tests }
+UsuarioTest >> testEsUsuarioSeguido [
+	"Verifica si un usuario esta en la colección de usuarios seguidos del usuario."
+	
+	self deny: (user1 esUsuarioSeguido: user2).
+	user1 agregarUsuarioParaSeguir: user2.
+	self assert: (user1 esUsuarioSeguido: user2).
+]
+
+{ #category : #tests }
+UsuarioTest >> testPreguntasConTopicosDeInteres [
+
+	"Verifica la correcta obtención de las preguntas que tienen un tópico de interés."
+
+	self assert: user1 preguntasConTopicosDeInteres size equals: 0.
+
+	user1 agregarTopicoDeInteres: topic1.
+	self assert: user1 preguntasConTopicosDeInteres size equals: 2.
+	user1 preguntasConTopicosDeInteres do: [ :unaPregunta | 
+		self assert: (unaPregunta tieneElTopico: topic1).
+	].
+
+]
+
+{ #category : #tests }
+UsuarioTest >> testPreguntasDeUsuariosSeguidos [
+	"Verifica la correcta obtención de las preguntas de los usuarios seguidos por el usuario."
+	
+	self assert: user1 preguntasDeUsuariosSeguidos size equals: 0.
+	
+	user1 agregarUsuarioParaSeguir: user2.
+	self assert: user1 preguntasDeUsuariosSeguidos size equals: 1.
+	self assert: (user1 preguntasDeUsuariosSeguidos includes: ask2).
+]
+
+{ #category : #tests }
 UsuarioTest >> testPreguntasPorFechaDescendente [
 	"Se verifica el correcto funcionamiento del mensaje."
 	|ask preguntas|
@@ -217,9 +286,74 @@ UsuarioTest >> testPuntaje [
 	"Se verifica el correcto funcionamiento del puntaje de un usuario.E indirectamente el
 	funcionamiento del mensaje #puntaje de la superclase Post."
 
-	self assert: user1 puntaje equals: 21.
+	self assert: user1 puntaje equals: 22.
 	self assert: user2 puntaje equals: 19.
 	self assert: user3 puntaje equals: 122.
+]
+
+{ #category : #tests }
+UsuarioTest >> testPuntajePorPreguntasPublicadas [
+	"Verifica el correcto cálculo de puntaje por preguntas realizadas por el usuario."
+
+	self assert: user1 puntajePorPreguntasPublicadas equals: 20.
+	Pregunta conTopicos: { topic3. } titulo: 'test' descripcion: 'testing...' usuario: user1.
+	self assert: user1 puntajePorPreguntasPublicadas equals: 40.
+]
+
+{ #category : #tests }
+UsuarioTest >> testPuntajePorRespuestasPublicadas [
+	"Se verifica el correcto cálculo de puntajes por respuestas publicadas (a preguntas de otros usuarios) del usuario."
+
+	self assert: user1 puntajePorRespuestasPublicadas equals: 0.
+	ask2 crearRespuestaConTexto: 'test' usuario: user1.
+	self assert: user1 puntajePorRespuestasPublicadas equals: 50.
+]
+
+{ #category : #tests }
+UsuarioTest >> testPuntajePorVotosDePreguntasPublicadas [
+	"Se verficia el correcto cálculo del puntaje por votos a preguntas publicadas por el usuario."
+
+	self assert: user1 puntajePorVotosDePreguntasPublicadas equals: 1.
+	ask1 agregarDislikeDelUsuario: user3.
+	self assert: user1 puntajePorVotosDePreguntasPublicadas equals: -1.
+]
+
+{ #category : #tests }
+UsuarioTest >> testPuntajePorVotosDeRespuestasPublicadas [
+	"Se verficia el correcto cálculo del puntaje por votos a preguntas publicadas por el usuario."
+	
+	self assert: user1 puntajePorVotosDeRespuestasPublicadas equals: 1.
+	ans2 agregarDislikeDelUsuario: user3.
+	self assert: user1 puntajePorVotosDeRespuestasPublicadas equals: 0.
+]
+
+{ #category : #tests }
+UsuarioTest >> testQuitarTopicoDeInteres [
+	"Verifica la eliminación de un tópico en la colección de tópicos del usuario."
+	
+	user1 agregarTopicoDeInteres: topic2.
+	self assert: (user1 esTopicoDeInteres: topic2).
+	user1 quitarTopicoDeInteres: topic2.
+	self deny: (user1 esTopicoDeInteres: topic2).
+]
+
+{ #category : #tests }
+UsuarioTest >> testRespondiAMiPreguntaCon [
+	"Verifica si una respuesta del usuario se incluye en su colección de preguntas. Retorna true si esa respuesta
+	fue para una pregunta de si mismo."
+
+	self deny: (user1 respondiAMiPreguntaCon: ans1).
+	self assert: (user1 respondiAMiPreguntaCon: ans2).
+	self deny: (user1 respondiAMiPreguntaCon: ans3).
+]
+
+{ #category : #tests }
+UsuarioTest >> testRespuestasAOtrosUsuarios [
+	"Verifica la corracta obtención de la colección de respuestas que realizó el usuario en preguntas de otros usuarios."
+
+	self assert: user1 respuestasAOtrosUsuarios size equals: 0.
+	ask2 crearRespuestaConTexto: 'test' usuario: user1.
+	self assert: user1 respuestasAOtrosUsuarios size equals: 1.
 ]
 
 { #category : #tests }
