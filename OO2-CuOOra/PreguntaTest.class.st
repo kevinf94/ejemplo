@@ -35,6 +35,17 @@ PreguntaTest >> setUp [
 ]
 
 { #category : #tests }
+PreguntaTest >> testCantidadDeRespuestas [
+	"Se verifica el correcto funcionamiento del método <<cantidadDeRespuestas. "
+
+	self assert: pregunta1 cantidadDeRespuestas equals: 2.
+	pregunta1
+		crearRespuestaConTexto: 'otra respuesta del usuario 2'
+		usuario: usuario2.
+	self assert: pregunta1 cantidadDeRespuestas equals: 3.
+]
+
+{ #category : #tests }
 PreguntaTest >> testCrearRespuestaConTextoUsuario [
 	
 	"Se verifica la correcta creación de una respuesta."
@@ -54,6 +65,19 @@ PreguntaTest >> testEsTuUsuario [
 	
 	self assert: (pregunta1 esTuUsuario: usuario1).
 	self deny: (pregunta1 esTuUsuario: usuario2)
+]
+
+{ #category : #tests }
+PreguntaTest >> testRespuestas [
+	"Se verifica el correcto funcionamiento del método respuestas. Si agrego mas likes a 'respuesta1', la coleccion ordenada que devuelve el metodo <<respuestas la posicionará primero "
+
+	| respuestasEnOrdenPorPuntaje |
+	respuesta1 agregarLikeDelUsuario: usuario1.
+	respuesta1 agregarLikeDelUsuario: usuario2.
+	respuesta2 agregarLikeDelUsuario: usuario1.
+	respuestasEnOrdenPorPuntaje := pregunta1 respuestas.
+	self assert: respuestasEnOrdenPorPuntaje first equals: respuesta1.
+	self assert: respuestasEnOrdenPorPuntaje second equals: respuesta2
 ]
 
 { #category : #tests }

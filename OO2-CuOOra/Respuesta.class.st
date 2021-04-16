@@ -17,7 +17,8 @@ Respuesta class >> conTexto: unTexto usuario: unUsuario [
 
 { #category : #accessing }
 Respuesta >> borrate [
-	usuario borrarLaRespuesta: self.
+"No necesita test, ya es testeado en la clase usuario. Por que cuando la respuesta es contenida en la coleccion del usuario que la creo, la respuesta le manda el mensaje al usuario para que la borre "
+	usuario borrarLaRespuesta: self
 ]
 
 { #category : #creating }
