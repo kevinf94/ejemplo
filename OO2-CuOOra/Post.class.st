@@ -25,6 +25,7 @@ Post >> agregarDislikeDelUsuario: unUsuario [
 		votos add: (Voto tipoDelUsuario: unUsuario).
 	Ocurre lo mismo en el método #agregarLikeDelUsuario."
 	elVoto esLike ifTrue: [ elVoto cambiar ]
+	
 ]
 
 { #category : #accessing }

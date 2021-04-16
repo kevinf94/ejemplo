@@ -44,6 +44,7 @@ PreguntaTest >> testCrearRespuestaConTextoUsuario [
 	usuario := Usuario conNombre: 'otro' contrasena: '123'.
 	respuesta := pregunta1 crearRespuestaConTexto: 'una respuesta' usuario: usuario.
 	self assert: (pregunta1 tenesLaRespuesta: respuesta).
+	self assert: (usuario respuestas includes: respuesta).
 	
 ]
 
@@ -53,23 +54,6 @@ PreguntaTest >> testEsTuUsuario [
 	
 	self assert: (pregunta1 esTuUsuario: usuario1).
 	self deny: (pregunta1 esTuUsuario: usuario2)
-]
-
-{ #category : #tests }
-PreguntaTest >> testObtenerRespuestasDelUsuario [
-	
-	"Se verifica el correcto funcionamiento de la obtención de una coleccion con las respuestas realizadas por un
-	usuario determinado que corresponden a la pregunta."
-	
-	|respuestas|
-	respuestas := pregunta1 obtenerRespuestasDelUsuario: (Usuario conNombre: 'Test' contrasena: 'testeando').
-	self assert: respuestas isEmpty.
-
-	respuestas := pregunta1 obtenerRespuestasDelUsuario: usuario2.
-	self assert: respuestas size equals: 1.
-	self assert: (respuesta1 esDelUsuario: usuario2).
-	self assert: (respuestas includes: respuesta1).
-
 ]
 
 { #category : #tests }

@@ -48,7 +48,7 @@ Usuario >> borrarLaPregunta: unaPregunta [
 	^preguntas remove: unaPregunta ifAbsent: [ ^nil ].
 ]
 
-{ #category : #accessing }
+{ #category : #'methods for tests' }
 Usuario >> borrarLaRespuesta: unaRespuesta [
 	^respuestas remove: unaRespuesta ifAbsent: [ ^nil ].
 ]
@@ -129,7 +129,7 @@ Usuario >> preguntas [
 
 { #category : #private }
 Usuario >> preguntasConTopicosDeInteres [
-	^topicos flatCollect: [ :unTopico | unTopico preguntas. ]
+	^topicos flatCollect: [ :unTopico | unTopico preguntas. ].
 ]
 
 { #category : #private }

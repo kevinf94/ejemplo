@@ -4,6 +4,7 @@ CuOOra clearSoleInstance.
 WAAdmin unregister: 'cuoora'.
 miAplicacion := WAAdmin register: CuOOraLoginComponent asApplicationAt: 'cuoora'.
 miAplicacion sessionClass: CuOOraSessionWithUser.
+CuOOra allInstances.
 "
 Class {
 	#name : #CuOOraHomeComponent,
