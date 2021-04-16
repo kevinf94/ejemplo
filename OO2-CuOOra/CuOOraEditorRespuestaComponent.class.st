@@ -1,5 +1,13 @@
 "
-.
+Posible extensión de funcionalidad:
+
+conPregunta: unaPregunta yRespuesta: unaRespuesta
+	^self new conPregunta: unaPregunta yRespuesta: unaRespuesta; yourself
+
+conPregunta: unaPregunta yRespuesta: unaRespuesta
+	pregunta := unaPregunta.
+	respuesta := unaRespuesta.
+	texto := unaRespuesta texto.
 "
 Class {
 	#name : #CuOOraEditorRespuestaComponent,
@@ -16,11 +24,6 @@ Class {
 { #category : #'instance creation' }
 CuOOraEditorRespuestaComponent class >> conPregunta: unaPregunta [
 	^self new conPregunta: unaPregunta; yourself.
-]
-
-{ #category : #'instance creation' }
-CuOOraEditorRespuestaComponent class >> conPregunta: unaPregunta yRespuesta: unaRespuesta [
-	^self new conPregunta: unaPregunta yRespuesta: unaRespuesta; yourself
 ]
 
 { #category : #callbacks }
@@ -41,13 +44,6 @@ CuOOraEditorRespuestaComponent >> clearVariables [
 CuOOraEditorRespuestaComponent >> conPregunta: unaPregunta [
 	pregunta := unaPregunta.
 
-]
-
-{ #category : #'instance creation' }
-CuOOraEditorRespuestaComponent >> conPregunta: unaPregunta yRespuesta: unaRespuesta [
-	pregunta := unaPregunta.
-	respuesta := unaRespuesta.
-	texto := unaRespuesta texto.
 ]
 
 { #category : #callbacks }
