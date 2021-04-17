@@ -15,8 +15,7 @@ Class {
 	#instVars : [
 		'nuevoTexto',
 		'pregunta',
-		'texto',
-		'respuesta'
+		'texto'
 	],
 	#category : #'OO2-CuOOra-InterfazWeb'
 }
@@ -36,7 +35,7 @@ CuOOraEditorRespuestaComponent >> cancelarRespuesta [
 CuOOraEditorRespuestaComponent >> clearVariables [
 	pregunta := nil.
 	nuevoTexto := nil.
-	respuesta := nil.
+	"respuesta := nil."
 	texto := nil.
 ]
 

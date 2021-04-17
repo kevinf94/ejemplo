@@ -112,14 +112,12 @@ CuOOraTest >> testCrearUnNuevoUsuarioConNombreContrasena [
 
 { #category : #tests }
 CuOOraTest >> testExisteUsuarioConNombre [
+
 	"Verifica el correcto funcionamiento del mensaje."
 
 	self assert: (sistema existeUsuarioConNombre: 'userTest1').
 	self assert: (sistema existeUsuarioConNombre: 'UsErteSt1').
-	self
-		deny:
-			(sistema
-				existeUsuarioConNombre: 'no existe este usuario en la soleInstance...')
+	self deny: (sistema existeUsuarioConNombre: 'no existe este usuario en la soleInstance...').
 ]
 
 { #category : #tests }

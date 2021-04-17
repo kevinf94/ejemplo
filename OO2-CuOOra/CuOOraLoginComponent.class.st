@@ -1,5 +1,5 @@
 "
-En un playground ejecutar el siguiente c√≥digo para registrar la aplicaci√≥n:
+En un playground ejecutar el siguiente código para registrar la aplicaci√≥n:
 
 |miAplicacion|
 miAplicacion := WAAdmin register: CuOOraLoginComponent asApplicationAt: 'cuoora'.
